@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getTokenThunk } from '../redux/actions/actions';
 import * as localStorage from '../services/services';
-import logo from '../trivia.png';
 
 class Login extends Component {
   constructor() {
@@ -49,8 +48,8 @@ class Login extends Component {
     return (
       <>
         <div className="App">
-          <header className="App-header">
-            <img src={ logo } className="App-logo" alt="logo" />
+          <header>
+            {/* <img src={ logo } className="App-logo" alt="logo" /> */}
             <p>SUA VEZ</p>
           </header>
         </div>
