@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import logo from '../trivia.png';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import { getTokenThunk, saveUser } from '../redux/actions/actions';
+import * as localStorage from '../services/services';
 
 class Login extends Component {
   constructor() {
@@ -22,18 +26,47 @@ class Login extends Component {
     }
   }
 
-  handleSubmit = (event) => {
+  saveUserOnLocalStorage = () => {
+    const { name, gravatarEmail } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+    const score = 0;
+
+    localStorage.createRanking({
+      name,
+      score,
+      picture,
+    });
+  }
+
+  handleSubmit = async (event) => {
     event.preventDefault();
+
+    const { userName, userEmail } = this.state;
+    const { getToken, history, saveUserInfos } = this.props;
+
+    await getToken();
+    await saveUserInfos(userName, userEmail);
+    this.saveUserOnLocalStorage();
+
+    const { token } = this.props;
+    localStorage.createToken(token);
+    history.push('/game');
+  }
+
+  handleOnClick = () => {
+    const { history } = this.props;
+
+    history.push('/setup');
   }
 
   render() {
     const { userName, userEmail, buttonDisabled } = this.state;
-    console.log(buttonDisabled);
     return (
       <>
         <div className="App">
-          <header className="App-header">
-            <img src={ logo } className="App-logo" alt="logo" />
+          <header>
+            {/* <img src={ logo } className="App-logo" alt="logo" /> */}
             <p>SUA VEZ</p>
           </header>
         </div>
@@ -62,19 +95,42 @@ class Login extends Component {
                 onChange={ this.handleOnChange }
               />
             </label>
+            <button
+              type="submit"
+              name="enter"
+              disabled={ buttonDisabled }
+              data-testid="btn-play"
+            >
+              Play
+            </button>
           </form>
-          <button
-            type="submit"
-            name="enter"
-            disabled={ buttonDisabled }
-            data-testid="btn-play"
-          >
-            Play
-          </button>
         </div>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ this.handleOnClick }
+        >
+          configurações
+        </button>
+
       </>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getToken: (state) => dispatch(getTokenThunk(state)),
+  saveUserInfos: (name, email) => dispatch(saveUser(name, email)),
+});
+
+const mapStateToProps = (state) => ({
+  token: state.player.token,
+});
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
+  token: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

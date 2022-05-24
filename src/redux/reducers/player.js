@@ -1,10 +1,19 @@
-import { SAVE_USER } from '../actions/actions';
+import {
+  SAVE_USER,
+  GET_TOKEN_ERROR,
+  GET_TOKEN_LOADING,
+  GET_TOKEN_SUCCESS,
+} from '../actions/actions';
 
 const INITIAL_STATE = {
   name: '',
   assertions: '',
-  score: '',
+  score: 0,
   gravatarEmail: '',
+  token: '',
+  isFetching: false,
+  error: '',
+  firstRender: true,
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -14,6 +23,23 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.gravatarEmail,
+    };
+  case GET_TOKEN_LOADING:
+    return {
+      ...state,
+      isFetching: true,
+    };
+  case GET_TOKEN_SUCCESS:
+    return {
+      ...state,
+      isFetching: false,
+      token: action.payload.token,
+    };
+  case GET_TOKEN_ERROR:
+    return {
+      ...state,
+      isFetching: false,
+      error: action.payload.error,
     };
   default:
     return state;
