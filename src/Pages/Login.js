@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getTokenThunk } from '../redux/actions/actions';
+import * as localStorage from '../services/services';
 import logo from '../trivia.png';
 
 class Login extends Component {
@@ -22,13 +26,26 @@ class Login extends Component {
     }
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
+
+    // const { userName, userEmail } = this.state;
+    const { getToken, history } = this.props;
+    await getToken();
+    const { token } = this.props;
+
+    localStorage.createToken(token);
+    history.push('/game');
+  }
+
+  handleOnClick = () => {
+    const { history } = this.props;
+
+    history.push('/setup');
   }
 
   render() {
     const { userName, userEmail, buttonDisabled } = this.state;
-    console.log(buttonDisabled);
     return (
       <>
         <div className="App">
@@ -62,19 +79,41 @@ class Login extends Component {
                 onChange={ this.handleOnChange }
               />
             </label>
+            <button
+              type="submit"
+              name="enter"
+              disabled={ buttonDisabled }
+              data-testid="btn-play"
+            >
+              Play
+            </button>
           </form>
-          <button
-            type="submit"
-            name="enter"
-            disabled={ buttonDisabled }
-            data-testid="btn-play"
-          >
-            Play
-          </button>
         </div>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ this.handleOnClick }
+        >
+          configurações
+        </button>
+
       </>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  getToken: (state) => dispatch(getTokenThunk(state)),
+});
+
+const mapStateToProps = (state) => ({
+  token: state.player.token,
+});
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
