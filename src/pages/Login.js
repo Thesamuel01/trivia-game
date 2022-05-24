@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getTokenThunk } from '../redux/actions/actions';
+import md5 from 'crypto-js/md5';
+import { getTokenThunk, saveUser } from '../redux/actions/actions';
 import * as localStorage from '../services/services';
 
 class Login extends Component {
@@ -25,14 +26,30 @@ class Login extends Component {
     }
   }
 
+  saveUserOnLocalStorage = () => {
+    const { name, gravatarEmail } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+    const score = 0;
+
+    localStorage.createRanking({
+      name,
+      score,
+      picture,
+    });
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    // const { userName, userEmail } = this.state;
-    const { getToken, history } = this.props;
-    await getToken();
-    const { token } = this.props;
+    const { userName, userEmail } = this.state;
+    const { getToken, history, saveUserInfos } = this.props;
 
+    await getToken();
+    await saveUserInfos(userName, userEmail);
+    this.saveUserOnLocalStorage();
+
+    const { token } = this.props;
     localStorage.createToken(token);
     history.push('/game');
   }
@@ -103,6 +120,7 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getToken: (state) => dispatch(getTokenThunk(state)),
+  saveUserInfos: (name, email) => dispatch(saveUser(name, email)),
 });
 
 const mapStateToProps = (state) => ({
@@ -111,7 +129,7 @@ const mapStateToProps = (state) => ({
 
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
   token: PropTypes.string.isRequired,
 };
 

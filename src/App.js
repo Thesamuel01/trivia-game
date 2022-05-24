@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Game from './Pages/Game';
-import Setup from './Pages/Setup';
-import NotFound from './Pages/NotFound';
-import Login from './Pages/Login';
+import Game from './pages/Game';
+import Setup from './pages/Setup';
+import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 
 export default function App() {
   return (

@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   token: '',
   isFetching: false,
   error: '',
+  firstRender: true,
 };
 
 const player = (state = INITIAL_STATE, action) => {
