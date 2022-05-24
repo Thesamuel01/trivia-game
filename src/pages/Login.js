@@ -67,6 +67,7 @@ class Login extends Component {
             type="submit"
             name="enter"
             disabled={ buttonDisabled }
+            data-testid="btn-play"
           >
             Play
           </button>
