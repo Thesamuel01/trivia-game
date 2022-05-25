@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { getTokenThunk, saveUser } from '../redux/actions/actions';
-import * as storageLocal from '../services/services';
+import * as localStorage from '../services/services';
 
 class Login extends Component {
   constructor() {
@@ -32,12 +32,12 @@ class Login extends Component {
     const picture = `https://www.gravatar.com/avatar/${hash}`;
     const score = 0;
 
-    storageLocal.createRanking({
+    localStorage.createRanking({
       name,
       score,
       picture,
     });
-    storageLocal.createToken(token);
+    localStorage.createToken(token);
   }
 
   handleSubmit = async (event) => {

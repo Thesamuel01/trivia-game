@@ -44,18 +44,6 @@ describe('Testa a página de login', () => {
 
   });
 
-  it('Testa se ao clicar em "Play", a página é redirecionada para /game', async () => {
-    renderWithRouterAndRedux(<App />);
-
-    const buttonEl = screen.getByRole('button', { name: 'Play' });
-    expect(buttonEl).toBeInTheDocument();
-
-    userEvent.click(buttonEl);
-
-    const setupHeaderEl = screen.findByRole('heading', { level: 2 });
-    expect(setupHeaderEl).toBeInTheDocument();
-  });
-
   it('Testa se ao clicar em "configurações", a página é redirecionada para /setup', () => {
     renderWithRouterAndRedux(<App />)
     
@@ -67,4 +55,25 @@ describe('Testa a página de login', () => {
     expect(setupHeaderEl).toBeInTheDocument();
   });
 
+  it('Testa se ao clicar em "Play", a página é redirecionada para /game', async () => {
+    renderWithRouterAndRedux(<App />);
+
+    
+    const inputlUserEl = screen.getByRole('textbox', { name: 'Username' });
+    const inputEmailEl = screen.getByRole('textbox', { name: 'E-mail' });
+    const buttonEl = screen.getByRole('button', { name: 'Play' });
+    expect(buttonEl).toBeDisabled();
+    expect(inputlUserEl).toBeInTheDocument();
+    expect(inputEmailEl).toBeInTheDocument();
+
+
+    userEvent.type(inputlUserEl, 'usuário');
+    userEvent.type(inputEmailEl, 'usuario@email.com');
+    expect(buttonEl).not.toBeDisabled();
+
+    userEvent.click(buttonEl);
+
+    const setupHeaderEl = await screen.findByRole('heading', { level: 2 }, { timeout: 3000 } );
+    expect(setupHeaderEl).toBeInTheDocument();
+  });
 });
