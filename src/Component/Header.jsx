@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as localStorage from '../services/services';
 
@@ -8,25 +8,23 @@ class Header extends Component {
     super();
 
     this.state = {
-      firstRender: true,
-      userInfos: {
-        name: '',
-        picture: '',
-        score: 0,
-      },
+      timesPlayed: localStorage.getRanking().length - 1,
     };
   }
 
   render() {
-    const { userInfos } = this.state;
-    const { name, picture, score } = false ? localStorage.getRanking() : userInfos;
+    const { score: currentScore, firstRender } = this.props;
+    const { timesPlayed } = this.state;
+    const { name, picture, score: scoreValueSaved } = localStorage
+      .getRanking()[timesPlayed];
+    const score = firstRender ? scoreValueSaved : currentScore;
 
     return (
       <div>
         <header>
           <img
-            src={ picture }
             alt="user"
+            src={ picture }
             data-testid="header-profile-picture"
           />
           <h2 data-testid="header-player-name">{ name }</h2>
@@ -37,12 +35,14 @@ class Header extends Component {
   }
 }
 
-// const mapStateToProps = (state) = ({
-//   firstRender: state.player.firstRender,
-// });
+const mapStateToProps = (state) => ({
+  firstRender: state.player.firstRender,
+  score: state.player.score,
+});
 
-/* Header.propTypes = {
+Header.propTypes = {
   firstRender: PropTypes.bool.isRequired,
-}; */
+  score: PropTypes.number.isRequired,
+};
 
-export default connect()(Header);
+export default connect(mapStateToProps)(Header);

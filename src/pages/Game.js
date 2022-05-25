@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../Component/Header'
+import Header from '../Component/Header';
 
 class Game extends Component {
   render() {
@@ -12,5 +12,3 @@ class Game extends Component {
 }
 
 export default Game;
-
-
