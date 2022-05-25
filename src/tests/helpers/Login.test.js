@@ -56,6 +56,7 @@ describe('Testa a página de login', () => {
   });
 
   it('Testa se ao clicar em "Play", a página é redirecionada para /game', async () => {
+    
     renderWithRouterAndRedux(<App />);
 
     
@@ -73,7 +74,7 @@ describe('Testa a página de login', () => {
 
     userEvent.click(buttonEl);
 
-    const setupHeaderEl = await screen.findByRole('heading', { level: 2 }, { timeout: 3000 } );
+    const setupHeaderEl = await screen.findByRole('heading', { level: 2 }, {timeout: 3000} );
     expect(setupHeaderEl).toBeInTheDocument();
   });
 });
