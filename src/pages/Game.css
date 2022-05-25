@@ -1,0 +1,7 @@
+.buttonGameCorrect {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.buttonGameError {
+  border: 3px solid red;
+}
