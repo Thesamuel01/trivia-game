@@ -17,34 +17,16 @@ describe('Testa a página de login', () => {
     expect(loginTextEl).toBeInTheDocument();
   });
 
-  it('Testa se o input Username é renderizado', () => {
-    renderWithRouterAndRedux(<Login />)
-
-    const inputlUserEl = screen.getByRole('textbox', { name: 'Username' });
-    expect(inputlUserEl).toBeInTheDocument();
-  });
-
-  /*  */
-  // preciso fazer dois testes separados ou posso juntá-los em um?
-  /*  */
-  
-  it('Testa se o input Email é renderizado', () => {
-    renderWithRouterAndRedux(<Login />)
-
-    const inputEmailEl = screen.getByRole('textbox', { name: 'E-mail' });
-    expect(inputEmailEl).toBeInTheDocument();
-  });
-
   it('Testa se o botão está desabilitado ao ser renderizado', () => {
-    renderWithRouterAndRedux(<Login />)
+    renderWithRouterAndRedux(<App />)
 
     const buttonPlayEl = screen.getByRole('button', { name: 'Play' });
     expect(buttonPlayEl).toBeInTheDocument();
     expect(buttonPlayEl).toBeDisabled();
   });
 
-  /* it('Testa se o botão é habilitado após os inputs serem preenchidos', () => {
-    renderWithRouterAndRedux(<Login />)
+  it('Testa se o botão é habilitado após os inputs serem preenchidos', () => {
+    renderWithRouterAndRedux(<App />);
 
     const buttonEl = screen.getByRole('button', { name: 'Play' });
     expect(buttonEl).toBeInTheDocument();
@@ -56,22 +38,15 @@ describe('Testa a página de login', () => {
     const inputEmailEl = screen.getByRole('textbox', { name: 'E-mail' });
     expect(inputEmailEl).toBeInTheDocument();
 
-    userEvent.type(inputlUserEl);
-    userEvent.type(inputEmailEl);
+    userEvent.type(inputlUserEl, 'usuário');
+    userEvent.type(inputEmailEl, 'usuario@email.com');
     expect(buttonEl).toBeEnabled();
-  }); */
 
-  it('Testa se o botão "configurações" é renderizado', () => {
-    renderWithRouterAndRedux(<Login />)
-
-    const buttonSetupEl = screen.getByRole('button', { name: 'configurações' });
-    expect(buttonSetupEl).toBeInTheDocument();
   });
 
-  it('Testa se o botão "configurações" é renderizado', () => {
-    const { history } = renderWithRouterAndRedux(<Login />)
-
-    history.push('/setup');
+  it('Testa se ao clicar em "configurações", a página é redirecionada para /setup', () => {
+    renderWithRouterAndRedux(<App />)
+    
     const buttonSetupEl = screen.getByRole('button', { name: 'configurações' });
     expect(buttonSetupEl).toBeInTheDocument();
 
@@ -80,4 +55,25 @@ describe('Testa a página de login', () => {
     expect(setupHeaderEl).toBeInTheDocument();
   });
 
-})
+  it('Testa se ao clicar em "Play", a página é redirecionada para /game', async () => {
+    renderWithRouterAndRedux(<App />);
+
+    
+    const inputlUserEl = screen.getByRole('textbox', { name: 'Username' });
+    const inputEmailEl = screen.getByRole('textbox', { name: 'E-mail' });
+    const buttonEl = screen.getByRole('button', { name: 'Play' });
+    expect(buttonEl).toBeDisabled();
+    expect(inputlUserEl).toBeInTheDocument();
+    expect(inputEmailEl).toBeInTheDocument();
+
+
+    userEvent.type(inputlUserEl, 'usuário');
+    userEvent.type(inputEmailEl, 'usuario@email.com');
+    expect(buttonEl).not.toBeDisabled();
+
+    userEvent.click(buttonEl);
+
+    const setupHeaderEl = await screen.findByRole('heading', { level: 2 }, { timeout: 3000 } );
+    expect(setupHeaderEl).toBeInTheDocument();
+  });
+});
