@@ -26,8 +26,8 @@ class Login extends Component {
     }
   }
 
-  saveUserOnLocalStorage = () => {
-    const { name, gravatarEmail } = this.props;
+  saveInfosOnLocalStorage = () => {
+    const { name, gravatarEmail, token } = this.props;
     const hash = md5(gravatarEmail).toString();
     const picture = `https://www.gravatar.com/avatar/${hash}`;
     const score = 0;
@@ -37,6 +37,7 @@ class Login extends Component {
       score,
       picture,
     });
+    localStorage.createToken(token);
   }
 
   handleSubmit = async (event) => {
@@ -47,10 +48,8 @@ class Login extends Component {
 
     await getToken();
     await saveUserInfos(userName, userEmail);
-    this.saveUserOnLocalStorage();
+    this.saveInfosOnLocalStorage();
 
-    const { token } = this.props;
-    localStorage.createToken(token);
     history.push('/game');
   }
 
@@ -64,12 +63,6 @@ class Login extends Component {
     const { userName, userEmail, buttonDisabled } = this.state;
     return (
       <>
-        <div className="App">
-          <header>
-            {/* <img src={ logo } className="App-logo" alt="logo" /> */}
-            <p>SUA VEZ</p>
-          </header>
-        </div>
         <div>
           Login
           <form onSubmit={ this.handleSubmit }>
@@ -124,13 +117,20 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
+  name: state.player.name,
   token: state.player.token,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
-  history: PropTypes.objectOf.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   token: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  saveUserInfos: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
