@@ -4,8 +4,7 @@ const TOKEN_KEY = 'token';
 const readRanking = () => JSON.parse(localStorage.getItem(RANKING_KEY));
 const saveRanking = (ranking) => localStorage
   .setItem(RANKING_KEY, JSON.stringify(ranking));
-const readToken = () => JSON
-  .parse(localStorage.getItem(TOKEN_KEY));
+const readToken = () => localStorage.getItem(TOKEN_KEY);
 const saveToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 
 export const createRanking = ({ name, score, picture }) => {
@@ -50,3 +49,5 @@ export const getToken = () => {
 export const createToken = (token) => {
   saveToken(token);
 };
+
+export const logout = () => localStorage.clear();
