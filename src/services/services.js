@@ -7,14 +7,8 @@ const saveRanking = (ranking) => localStorage
 const readToken = () => localStorage.getItem(TOKEN_KEY);
 const saveToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 
-export const createRanking = ({ name, score, picture }) => {
-  const ranking = {
-    name,
-    score,
-    picture,
-  };
-
-  saveRanking([{ ...ranking }]);
+export const createRanking = (ranking) => {
+  saveRanking([ranking]);
 };
 
 export const getRanking = () => {
@@ -27,10 +21,17 @@ export const getRanking = () => {
   return ranking;
 };
 
-export const updateScore = (newScore, userName) => {
+export const addNewRankings = (newRanking) => {
+  const oldRankings = getRanking();
+
+  saveRanking([...oldRankings, newRanking]);
+};
+
+export const saveScore = (newScore, userName) => {
   const rankings = readRanking();
-  const rankingToBeUpdate = rankings.filter(({ name }) => name === userName);
+  const rankingToBeUpdate = rankings.find(({ name }) => name === userName);
   const oldRankings = rankings.filter(({ name }) => name !== userName);
+
   rankingToBeUpdate.score = newScore;
 
   saveRanking([...oldRankings, rankingToBeUpdate]);
@@ -50,4 +51,4 @@ export const createToken = (token) => {
   saveToken(token);
 };
 
-export const logout = () => localStorage.clear();
+export const clearLocalStorage = () => localStorage.clear();

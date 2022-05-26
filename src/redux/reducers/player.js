@@ -3,11 +3,14 @@ import {
   GET_TOKEN_ERROR,
   GET_TOKEN_LOADING,
   GET_TOKEN_SUCCESS,
+  UPDATE_SCORE,
+  UPDATE_ASSERTIONS,
+  RESET_STORE,
 } from '../actions/actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
   token: '',
@@ -40,6 +43,22 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       isFetching: false,
       error: action.payload.error,
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload.score,
+      firstRender: false,
+    };
+  case UPDATE_ASSERTIONS:
+    return {
+      ...state,
+      assertions: state.assertions + action.payload.assertions,
+    };
+  case RESET_STORE:
+    return {
+      ...state,
+      ...INITIAL_STATE,
     };
   default:
     return state;
