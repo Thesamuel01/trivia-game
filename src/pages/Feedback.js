@@ -24,7 +24,8 @@ class Feedback extends Component {
     const { history } = this.props;
     const { playerDataLocal } = this.state;
     return (
-      <div>
+      <div className="background">
+
         <Header />
         <section className="container">
           <h1 data-testid="feedback-text">
@@ -37,10 +38,17 @@ class Feedback extends Component {
           >
             {`Você acertou ${playerDataLocal.assertions} Perguntas`}
           </div>
-          <div>
+          <div data-testid="feedback-total-score">
             {`Um total de ${playerDataLocal.score} pontos`}
           </div>
-          <button type="button" data-testid="btn-ranking">Ranking</button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ () => history.push('/ranking') }
+          >
+            Ranking
+
+          </button>
           <button
             type="button"
             data-testid="btn-play-again"

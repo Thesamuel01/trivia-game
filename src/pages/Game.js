@@ -116,18 +116,19 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, history } = this.props;
+    const { score, history, token } = this.props;
 
     const ranking = getRanking();
     const { name } = ranking[ranking.length - 1];
-
+    
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
       // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
       console.log(score);
       saveScore(score, name);
-      history.push('/feedback/123');
+      const redirectId = `/feedback/${token}`;
+      history.push(redirectId);
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
         answered: false,
@@ -223,12 +224,14 @@ Game.propTypes = {
   updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
   //  name: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
   name: state.player.name,
   assertions: state.player.updateAssertions,
+  token: state.player.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
