@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
+import Timer from '../Component/Timer';
 import { clearLocalStorage, getToken, saveScore } from '../services/services';
 import { updateAssertionsNumber, updateScorePoints } from '../redux/actions/actions';
 import './Game.css';
@@ -36,6 +37,28 @@ class Game extends Component {
     } else {
       this.logout();
     }
+    this.countDown();
+  }
+
+  countDown = () => {
+    const ONE_SECOND = 1000;
+    const TOTAL_TIME = 30000;
+
+    setInterval(() => {
+      const { timer } = this.state;
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }), console.log(timer));
+    }, ONE_SECOND);
+
+    /* AINDA FALTA A LÓGICA PARA FAZER O RELÓGIO PARAR NO ZERO.
+    ALÉM DISSO, AS RESPOSTAS ESTÃO SENDO LIBERADAS ANTES DO ZERO CHEGAR.
+    DEVE SER A ASSINCRONICIDADE DO SETSTATE.  */
+
+    setTimeout(() => {
+      this.handleOnUserAnswer(false);
+    }, TOTAL_TIME);
+    clearInterval(setInterval()); // NÃO FUNCIONOU
   }
 
   saveQuestions = (results) => {
@@ -185,11 +208,12 @@ class Game extends Component {
   }
 
   render() {
-    const { endRequisition } = this.state;
+    const { endRequisition, timer } = this.state;
 
     return (
       <div>
         <Header />
+        <Timer countDown={ timer } />
         <section>
           {
             endRequisition && this.renderQuestion()
