@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
 import { clearLocalStorage, getToken, saveScore } from '../services/services';
-import {
-  resetStore,
-  updateAssertionsNumber,
-  updateScorePoints,
-} from '../redux/actions/actions';
+import { updateAssertionsNumber, updateScorePoints } from '../redux/actions/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -102,11 +98,11 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, name, resetMatch } = this.props;
+    const { score, name } = this.props;
 
     if (indexQuestion === questions.length - 1) {
+      // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
       saveScore(score, name);
-      resetMatch();
       /*
         FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
         FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
@@ -212,7 +208,6 @@ Game.propTypes = {
   updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  resetMatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -221,7 +216,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  resetMatch: () => dispatch(resetStore()),
   updateScore: (score) => dispatch(updateScorePoints(score)),
   updateAssertions:
     (numberOfAssertions) => dispatch(updateAssertionsNumber(numberOfAssertions)),
