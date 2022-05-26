@@ -1,8 +1,8 @@
 import React from "react";
 import { renderWithRouterAndRedux } from './renderWithRouterAndRedux';
 import { screen } from "@testing-library/react";
-import App from '../../App'
-import Login from "../../pages/Login";
+import App from '../App'
+import Login from "../pages/Login";
 import userEvent from "@testing-library/user-event";
 
 describe('Testa a página de login', () => {
@@ -13,7 +13,7 @@ describe('Testa a página de login', () => {
   it('Testa se o texto "Login" é renderizado', () => {
     renderWithRouterAndRedux(<Login />)
 
-    const loginTextEl = screen.getByText('Login');
+    const loginTextEl = screen.getByRole('heading', { name:'Login', level: 2 });
     expect(loginTextEl).toBeInTheDocument();
   });
 

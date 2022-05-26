@@ -79,7 +79,7 @@ class Login extends Component {
     return (
       <>
         <div>
-          Login
+          <h2>Login</h2>
           <form onSubmit={ this.handleSubmit }>
             <label htmlFor="username">
               Username
