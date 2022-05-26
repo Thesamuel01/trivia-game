@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as localStorage from '../services/services';
+import { getRanking } from '../services/services';
 
 class Header extends Component {
   constructor() {
     super();
 
     this.state = {
-      timesPlayed: localStorage.getRanking().length - 1,
+      timesPlayed: getRanking().length - 1,
     };
   }
 
   render() {
     const { score: currentScore, firstRender } = this.props;
     const { timesPlayed } = this.state;
-    const { name, picture, score: scoreValueSaved } = localStorage
-      .getRanking()[timesPlayed];
+    const { name, picture, score: scoreValueSaved } = getRanking()[timesPlayed];
     const score = firstRender ? scoreValueSaved : currentScore;
 
     return (
