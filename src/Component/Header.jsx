@@ -15,14 +15,17 @@ class Header extends Component {
   componentDidMount() {
     const { score } = this.props;
     const ranking = getRanking();
-    const { name } = ranking[ranking.length - 1];
-    saveScore(score, name);
+    const userRanking = ranking[ranking.length - 1];
+    saveScore(score, userRanking);
   }
 
   render() {
     const { score: currentScore, firstRender } = this.props;
     const { timesPlayed } = this.state;
-    const { name, picture, score: scoreValueSaved } = getRanking()[timesPlayed];
+    const rankings = getRanking();
+    console.log(rankings);
+    console.log(timesPlayed);
+    const { name, picture, score: scoreValueSaved } = rankings[timesPlayed];
     const score = firstRender ? scoreValueSaved : currentScore;
 
     return (

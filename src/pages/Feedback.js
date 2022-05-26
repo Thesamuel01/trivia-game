@@ -24,7 +24,7 @@ class Feedback extends Component {
     const { history } = this.props;
     const { playerDataLocal } = this.state;
     return (
-      <div className={ style.background }>
+      <div>
         <span />
         <span />
         <span />
@@ -46,13 +46,12 @@ class Feedback extends Component {
         <span />
         <span />
         <Header />
-        <section className={ style.container }>
+        <section>
           <h1 data-testid="feedback-text">
             {playerDataLocal.assertions <= TRHEE ? 'Could be better..' : 'Well Done!' }
 
           </h1>
           <div
-            className="correctValue"
             data-testid="feedback-total-question"
           >
             {`Você acertou ${playerDataLocal.assertions} Perguntas`}
@@ -80,7 +79,12 @@ const mapStateToProps = (state) => ({
 });
 
 Feedback.propTypes = {
-  playerDataGlobal: PropTypes.arrayOf().isRequired,
+  playerDataGlobal: PropTypes.shape({
+    assertions: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 

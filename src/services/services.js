@@ -23,16 +23,16 @@ export const getRanking = () => {
 };
 
 export const addNewRankings = (newRanking) => {
+  console.log(newRanking);
   const oldRankings = getRanking();
-
+  console.log(oldRankings);
   saveRanking([...oldRankings, newRanking]);
 };
 
-export const saveScore = (newScore, userName) => {
-  console.log('new', newScore, '\n user', userName);
+export const saveScore = (newScore, { id: userId }) => {
   const rankings = readRanking();
-  const rankingToBeUpdate = rankings.find(({ name }) => name === userName);
-  const oldRankings = rankings.filter(({ name }) => name !== userName);
+  const rankingToBeUpdate = rankings.find(({ id }) => id === userId);
+  const oldRankings = rankings.filter(({ id }) => id !== userId);
 
   rankingToBeUpdate.score = newScore;
 

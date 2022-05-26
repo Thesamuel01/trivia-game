@@ -118,14 +118,13 @@ class Game extends Component {
     const { score, history } = this.props;
 
     const ranking = getRanking();
-    const { name } = ranking[ranking.length - 1];
-    
+    const userRanking = ranking[ranking.length - 1];
+
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
-      // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
-      console.log(score);
-      saveScore(score, name);
+      saveScore(score, userRanking);
+
       history.push('/feedback/123');
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
