@@ -38,15 +38,18 @@ class Login extends Component {
     const hash = md5(gravatarEmail).toString();
     const picture = `https://www.gravatar.com/avatar/${hash}`;
     const score = 0;
+    const LIMIT = 5000;
 
     if (ranking === null) {
       localStorage.createRanking({
+        id: md5((Math.random() * LIMIT).toString()).toString(),
         name,
         score,
         picture,
       });
     } else {
       localStorage.addNewRankings({
+        id: md5((Math.random() * LIMIT).toString()).toString(),
         name,
         score,
         picture,

@@ -119,14 +119,13 @@ class Game extends Component {
     const { score, history, token } = this.props;
 
     const ranking = getRanking();
-    const { name } = ranking[ranking.length - 1];
-    
+    const userRanking = ranking[ranking.length - 1];
+
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
-      // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
-      console.log(score);
-      saveScore(score, name);
+      saveScore(score, userRanking);
+
       const redirectId = `/feedback/${token}`;
       history.push(redirectId);
     } else {
