@@ -21,7 +21,7 @@ class Login extends Component {
     this.setState({
       [name]: value,
     });
-    if (userEmail.length > 1 && userName.length > 1) {
+    if (userEmail.length > 0 && userName.length > 0) {
       this.setState({ buttonDisabled: false });
     }
   }
