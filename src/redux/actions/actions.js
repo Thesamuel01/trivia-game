@@ -3,6 +3,7 @@ export const GET_TOKEN_LOADING = 'GET_TOKEN_LOADING';
 export const GET_TOKEN_ERROR = 'GET_TOKEN_ERROR';
 export const GET_TOKEN_SUCCESS = 'GET_TOKEN_SUCESS';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 export const saveUser = (name, gravatarEmail) => ({
   type: SAVE_USER,
@@ -39,3 +40,10 @@ export const getTokenThunk = () => async (dispatch) => {
     dispatch(getTokenError(error));
   }
 };
+
+export const updateScorePoints = (score) => ({
+  type: UPDATE_SCORE,
+  payload: {
+    score,
+  },
+});

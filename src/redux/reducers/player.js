@@ -3,6 +3,7 @@ import {
   GET_TOKEN_ERROR,
   GET_TOKEN_LOADING,
   GET_TOKEN_SUCCESS,
+  UPDATE_SCORE,
 } from '../actions/actions';
 
 const INITIAL_STATE = {
@@ -40,6 +41,12 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       isFetching: false,
       error: action.payload.error,
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload.score,
+      firstRender: false,
     };
   default:
     return state;

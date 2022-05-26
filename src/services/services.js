@@ -27,7 +27,7 @@ export const getRanking = () => {
   return ranking;
 };
 
-export const updateScore = (newScore, userName) => {
+export const saveScore = (newScore, userName) => {
   const rankings = readRanking();
   const rankingToBeUpdate = rankings.filter(({ name }) => name === userName);
   const oldRankings = rankings.filter(({ name }) => name !== userName);
@@ -50,4 +50,4 @@ export const createToken = (token) => {
   saveToken(token);
 };
 
-export const logout = () => localStorage.clear();
+export const clearLocalStorage = () => localStorage.clear();
