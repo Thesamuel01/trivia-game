@@ -20,35 +20,15 @@ class Feedback extends Component {
   }
 
   render() {
-    const TRHEE = 3;
+    const THREE = 3;
     const { history } = this.props;
     const { playerDataLocal } = this.state;
     return (
-      <div>
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
+      <div className="background">
         <Header />
-        <section>
+        <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions <= TRHEE ? 'Could be better..' : 'Well Done!' }
+            {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>
           <div
@@ -56,10 +36,17 @@ class Feedback extends Component {
           >
             {`Você acertou ${playerDataLocal.assertions} Perguntas`}
           </div>
-          <div>
+          <div data-testid="feedback-total-score">
             {`Um total de ${playerDataLocal.score} pontos`}
           </div>
-          <button type="button" data-testid="btn-ranking">Ranking</button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ () => history.push('/ranking') }
+          >
+            Ranking
+
+          </button>
           <button
             type="button"
             data-testid="btn-play-again"

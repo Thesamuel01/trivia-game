@@ -47,15 +47,16 @@ class Game extends Component {
     const ONE_SECOND = 1000;
     const TOTAL_TIME = 31000;
 
-    const clock = setInterval(() => {
+    this.clock = setInterval(() => {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
       }));
     }, ONE_SECOND);
 
     setTimeout(() => {
+      console.log('teste');
       this.handleOnUserAnswer(false);
-      clearInterval(clock);
+      clearInterval(this.clock);
     }, TOTAL_TIME);
   }
 
@@ -110,12 +111,12 @@ class Game extends Component {
       answered: true,
     }));
 
-    clearInterval(this.countDown);
+    clearInterval(this.clock);
   }
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, history } = this.props;
+    const { score, history, token } = this.props;
 
     const ranking = getRanking();
     const userRanking = ranking[ranking.length - 1];
@@ -125,7 +126,8 @@ class Game extends Component {
     if (indexQuestion === questions.length) {
       saveScore(score, userRanking);
 
-      history.push('/feedback/123');
+      const redirectId = `/feedback/${token}`;
+      history.push(redirectId);
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
         answered: false,
@@ -221,12 +223,14 @@ Game.propTypes = {
   updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
   //  name: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
   name: state.player.name,
   assertions: state.player.updateAssertions,
+  token: state.player.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
