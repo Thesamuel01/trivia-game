@@ -5,6 +5,7 @@ import Game from './pages/Game';
 import Setup from './pages/Setup';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
+import Feedback from './pages/Feedback';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Route exact path="/" component={ Login } />
       <Route path="/game" component={ Game } />
       <Route path="/setup" component={ Setup } />
+      <Route path="/feedback/:id" component={ Feedback } />
       <Route component={ NotFound } />
     </Switch>
   );
