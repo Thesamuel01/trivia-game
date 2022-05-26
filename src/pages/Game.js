@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
+import Timer from '../Component/Timer';
 import { clearLocalStorage, getToken, saveScore, getRanking } from '../services/services';
 import {
   updateAssertionsNumber,
@@ -39,6 +40,23 @@ class Game extends Component {
     } else {
       this.logout();
     }
+    this.countDown();
+  }
+
+  countDown = () => {
+    const ONE_SECOND = 1000;
+    const TOTAL_TIME = 31000;
+
+    const clock = setInterval(() => {
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }));
+    }, ONE_SECOND);
+
+    setTimeout(() => {
+      this.handleOnUserAnswer(false);
+      clearInterval(clock);
+    }, TOTAL_TIME);
   }
 
   saveQuestions = (results) => {
@@ -84,12 +102,6 @@ class Game extends Component {
     updateAssertions(1);
   }
 
-  /*
-    KELDER QUANDO FOR FAZER O TIMER, UTILIZE O ESTADO "timer" DA COMPONENTE
-    POIS ESTOU UTILIZANDO ELA PARA FAZER OS CÁLCULOS, APÓS O TIMER CHEGAR A ZERO,
-    CHAME A FUNCAO "handleOnUserAnswer" COM O PARAMETRO FALSE, POIS ELA É RESPONSÁVEL
-    POR HABILITAR O BOTAO NEXT PARA A PRÓXIMA PERGUNTA
-  */
   handleOnUserAnswer = (isTheCorrectAnswer) => {
     if (isTheCorrectAnswer) this.calcScore();
 
@@ -97,6 +109,8 @@ class Game extends Component {
       indexQuestion: indexQuestion + 1,
       answered: true,
     }));
+
+    clearInterval(this.countDown);
   }
 
   goToNextQuestion = () => {
@@ -105,6 +119,8 @@ class Game extends Component {
 
     const ranking = getRanking();
     const { name } = ranking[ranking.length - 1];
+    
+    this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
       // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
@@ -182,11 +198,12 @@ class Game extends Component {
   }
 
   render() {
-    const { endRequisition } = this.state;
+    const { endRequisition, timer } = this.state;
 
     return (
       <div>
         <Header />
+        <Timer countDown={ timer } />
         <section>
           {
             endRequisition && this.renderQuestion()
