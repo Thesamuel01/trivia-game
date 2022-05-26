@@ -99,12 +99,6 @@ class Game extends Component {
     updateAssertions(1);
   }
 
-  /*
-    KELDER QUANDO FOR FAZER O TIMER, UTILIZE O ESTADO "timer" DA COMPONENTE
-    POIS ESTOU UTILIZANDO ELA PARA FAZER OS CÁLCULOS, APÓS O TIMER CHEGAR A ZERO,
-    CHAME A FUNCAO "handleOnUserAnswer" COM O PARAMETRO FALSE, POIS ELA É RESPONSÁVEL
-    POR HABILITAR O BOTAO NEXT PARA A PRÓXIMA PERGUNTA
-  */
   handleOnUserAnswer = (isTheCorrectAnswer) => {
     if (isTheCorrectAnswer) this.calcScore();
 
