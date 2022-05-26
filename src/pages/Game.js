@@ -106,11 +106,15 @@ class Game extends Component {
       indexQuestion: indexQuestion + 1,
       answered: true,
     }));
+
+    clearInterval(this.countDown);
   }
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
     const { score, name } = this.props;
+
+    this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length - 1) {
       // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
