@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getRanking } from '../services/services';
+import { getRanking, saveScore } from '../services/services';
 
 class Header extends Component {
   constructor() {
@@ -10,6 +10,13 @@ class Header extends Component {
     this.state = {
       timesPlayed: getRanking().length - 1,
     };
+  }
+
+  componentDidMount() {
+    const { score } = this.props;
+    const ranking = getRanking();
+    const { name } = ranking[ranking.length - 1];
+    saveScore(score, name);
   }
 
   render() {

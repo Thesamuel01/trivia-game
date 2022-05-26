@@ -59,4 +59,13 @@ export const updateAssertionsNumber = (assertions) => ({
 
 export const resetStore = () => ({
   type: RESET_STORE,
+  initialState: {
+    name: '',
+    assertions: 0,
+    score: 0,
+    gravatarEmail: '',
+    token: '',
+    isFetching: false,
+    error: '',
+  },
 });

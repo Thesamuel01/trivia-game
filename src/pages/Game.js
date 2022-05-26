@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
-import { clearLocalStorage, getToken, saveScore } from '../services/services';
-import { updateAssertionsNumber, updateScorePoints } from '../redux/actions/actions';
+import { clearLocalStorage, getToken, saveScore, getRanking } from '../services/services';
+import {
+  updateAssertionsNumber,
+  updateScorePoints,
+} from '../redux/actions/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -98,22 +101,16 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, name } = this.props;
+    const { score, history } = this.props;
 
-    if (indexQuestion === questions.length - 1) {
+    const ranking = getRanking();
+    const { name } = ranking[ranking.length - 1];
+
+    if (indexQuestion === questions.length) {
       // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
+      console.log(score);
       saveScore(score, name);
-      /*
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-      */
+      history.push('/feedback/123');
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
         answered: false,
@@ -207,12 +204,13 @@ Game.propTypes = {
   updateScore: PropTypes.func.isRequired,
   updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  //  name: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
   name: state.player.name,
+  assertions: state.player.updateAssertions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

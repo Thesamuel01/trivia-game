@@ -1,5 +1,6 @@
 const RANKING_KEY = 'ranking';
 const TOKEN_KEY = 'token';
+// const ASSETION_KEY = 'assertion';
 
 const readRanking = () => JSON.parse(localStorage.getItem(RANKING_KEY));
 const saveRanking = (ranking) => localStorage
@@ -28,6 +29,7 @@ export const addNewRankings = (newRanking) => {
 };
 
 export const saveScore = (newScore, userName) => {
+  console.log('new', newScore, '\n user', userName);
   const rankings = readRanking();
   const rankingToBeUpdate = rankings.find(({ name }) => name === userName);
   const oldRankings = rankings.filter(({ name }) => name !== userName);

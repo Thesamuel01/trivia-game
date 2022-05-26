@@ -58,7 +58,7 @@ const player = (state = INITIAL_STATE, action) => {
   case RESET_STORE:
     return {
       ...state,
-      ...INITIAL_STATE,
+      ...action.initialState,
     };
   default:
     return state;
