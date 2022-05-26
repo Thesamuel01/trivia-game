@@ -20,35 +20,16 @@ class Feedback extends Component {
   }
 
   render() {
-    const TRHEE = 3;
+    const THREE = 3;
     const { history } = this.props;
     const { playerDataLocal } = this.state;
     return (
       <div className="background">
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
+
         <Header />
         <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions <= TRHEE ? 'Could be better..' : 'Well Done!' }
+            {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>
           <div

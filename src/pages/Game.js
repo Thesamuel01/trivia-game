@@ -47,15 +47,16 @@ class Game extends Component {
     const ONE_SECOND = 1000;
     const TOTAL_TIME = 31000;
 
-    const clock = setInterval(() => {
+    this.clock = setInterval(() => {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
       }));
     }, ONE_SECOND);
 
     setTimeout(() => {
+      console.log('teste');
       this.handleOnUserAnswer(false);
-      clearInterval(clock);
+      clearInterval(this.clock);
     }, TOTAL_TIME);
   }
 
@@ -110,7 +111,7 @@ class Game extends Component {
       answered: true,
     }));
 
-    clearInterval(this.countDown);
+    clearInterval(this.clock);
   }
 
   goToNextQuestion = () => {
@@ -119,6 +120,7 @@ class Game extends Component {
 
     const ranking = getRanking();
     const { name } = ranking[ranking.length - 1];
+    
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
