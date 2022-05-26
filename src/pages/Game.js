@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
 import { clearLocalStorage, getToken, saveScore } from '../services/services';
-import { updateScorePoints } from '../redux/actions/actions';
+import {
+  resetStore,
+  updateAssertionsNumber,
+  updateScorePoints,
+} from '../redux/actions/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -71,15 +75,22 @@ class Game extends Component {
   }
 
   calcScore = () => {
-    const { updateScore } = this.props;
+    const { updateScore, updateAssertions } = this.props;
     const { pointsBydifficulty, timer, currentQuestion: { difficulty } } = this.state;
 
     const SCORE_CONST = 10;
     const score = SCORE_CONST + (timer * pointsBydifficulty[difficulty]);
 
     updateScore(score);
+    updateAssertions(1);
   }
 
+  /*
+    KELDER QUANDO FOR FAZER O TIMER, UTILIZE O ESTADO "timer" DA COMPONENTE
+    POIS ESTOU UTILIZANDO ELA PARA FAZER OS CÁLCULOS, APÓS O TIMER CHEGAR A ZERO,
+    CHAME A FUNCAO "handleOnUserAnswer" COM O PARAMETRO FALSE, POIS ELA É RESPONSÁVEL
+    POR HABILITAR O BOTAO NEXT PARA A PRÓXIMA PERGUNTA
+  */
   handleOnUserAnswer = (isTheCorrectAnswer) => {
     if (isTheCorrectAnswer) this.calcScore();
 
@@ -91,19 +102,21 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score } = this.props;
+    const { score, name, resetMatch } = this.props;
 
     if (indexQuestion === questions.length - 1) {
-      saveScore(score);
+      saveScore(score, name);
+      resetMatch();
       /*
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
-        FAZER O PUSH PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
+        FAZER O "history.push" PARA A PAGINA DE FEEDBACK AQUI!!!!!!!!!!!!!
       */
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
@@ -196,15 +209,22 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   updateScore: PropTypes.func.isRequired,
+  updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  resetMatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  store: state.player.score,
+  score: state.player.score,
+  name: state.player.name,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  resetMatch: () => dispatch(resetStore()),
   updateScore: (score) => dispatch(updateScorePoints(score)),
+  updateAssertions:
+    (numberOfAssertions) => dispatch(updateAssertionsNumber(numberOfAssertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

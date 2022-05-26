@@ -28,15 +28,24 @@ class Login extends Component {
 
   saveInfosOnLocalStorage = () => {
     const { name, gravatarEmail, token } = this.props;
+    const ranking = localStorage.getRanking();
     const hash = md5(gravatarEmail).toString();
     const picture = `https://www.gravatar.com/avatar/${hash}`;
     const score = 0;
 
-    localStorage.createRanking({
-      name,
-      score,
-      picture,
-    });
+    if (ranking === null) {
+      localStorage.createRanking({
+        name,
+        score,
+        picture,
+      });
+    } else {
+      localStorage.addNewRankings({
+        name,
+        score,
+        picture,
+      });
+    }
     localStorage.createToken(token);
   }
 
