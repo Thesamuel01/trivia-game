@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-import { getTokenThunk, saveUser } from '../redux/actions/actions';
+import { getTokenThunk, saveUser, resetStore,
+} from '../redux/actions/actions';
 import * as localStorage from '../services/services';
 
 class Login extends Component {
@@ -14,6 +15,11 @@ class Login extends Component {
       userName: '',
       userEmail: '',
     };
+  }
+
+  componentDidMount() {
+    const { resetGame } = this.props;
+    resetGame();
   }
 
   handleOnChange = ({ target: { name, value } }) => {
@@ -123,6 +129,7 @@ class Login extends Component {
 const mapDispatchToProps = (dispatch) => ({
   getToken: (state) => dispatch(getTokenThunk(state)),
   saveUserInfos: (name, email) => dispatch(saveUser(name, email)),
+  resetGame: () => dispatch(resetStore()),
 });
 
 const mapStateToProps = (state) => ({
@@ -140,6 +147,7 @@ Login.propTypes = {
   name: PropTypes.string.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   saveUserInfos: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
