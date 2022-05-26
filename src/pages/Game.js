@@ -42,23 +42,18 @@ class Game extends Component {
 
   countDown = () => {
     const ONE_SECOND = 1000;
-    const TOTAL_TIME = 30000;
+    const TOTAL_TIME = 31000;
 
-    setInterval(() => {
-      const { timer } = this.state;
+    const clock = setInterval(() => {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
-      }), console.log(timer));
+      }));
     }, ONE_SECOND);
-
-    /* AINDA FALTA A LÓGICA PARA FAZER O RELÓGIO PARAR NO ZERO.
-    ALÉM DISSO, AS RESPOSTAS ESTÃO SENDO LIBERADAS ANTES DO ZERO CHEGAR.
-    DEVE SER A ASSINCRONICIDADE DO SETSTATE.  */
 
     setTimeout(() => {
       this.handleOnUserAnswer(false);
+      clearInterval(clock);
     }, TOTAL_TIME);
-    clearInterval(setInterval()); // NÃO FUNCIONOU
   }
 
   saveQuestions = (results) => {
