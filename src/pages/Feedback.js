@@ -6,20 +6,8 @@ import { getRanking, updateRefreshState } from '../services/services';
 // import style from '../css/Feedback.module.css';
 
 class Feedback extends Component {
-  constructor() {
-    super();
-    this.state = {
-      playerDataLocal: {},
-    };
-  }
-
   componentDidMount() {
-    // const { playerDataGlobal } = this.props;
     const rankings = getRanking();
-
-    // this.setState({
-    //   playerDataLocal: playerDataGlobal,
-    // });
 
     updateRefreshState(rankings[rankings.length - 1]);
   }
@@ -28,7 +16,7 @@ class Feedback extends Component {
     const THREE = 3;
     const { history } = this.props;
     const currentRanking = getRanking();
-    const playerDataLocal = currentRanking[currentRanking.length - 1];
+    const player = currentRanking[currentRanking.length - 1];
 
     return (
       <div className="background">
@@ -37,16 +25,18 @@ class Feedback extends Component {
         />
         <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
+            {player.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>
-          <div
-            data-testid="feedback-total-question"
-          >
-            {`Você acertou ${playerDataLocal.assertions} Perguntas`}
+          <div>
+            Você acertou
+            <span data-testid="feedback-total-question">{` ${player.assertions} `}</span>
+            Perguntas
           </div>
-          <div data-testid="feedback-total-score">
-            {`Um total de ${playerDataLocal.score} pontos`}
+          <div>
+            Um total de
+            <span data-testid="feedback-total-score">{` ${player.score} `}</span>
+            pontos
           </div>
           <button
             type="button"

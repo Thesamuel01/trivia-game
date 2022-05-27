@@ -29,12 +29,18 @@ class Header extends Component {
     });
   }
 
-  render() {
-    const { endRender } = this.state;
+  returnHeaderInfos = () => {
     const { score: currentScore, firstRender } = this.props;
     const rankingsSaved = getRanking();
-    const { name, picture, score: scoreValueSaved } = rankingsSaved[rankingsSaved.length - 1];
-    const score = firstRender ? scoreValueSaved : currentScore;
+    const { name, picture, score } = rankingsSaved[rankingsSaved.length - 1];
+    const points = firstRender ? score : currentScore;
+
+    return { name, picture, points };
+  }
+
+  render() {
+    const { endRender } = this.state;
+    const { name, picture, points } = this.returnHeaderInfos();
 
     return (
       <div>
@@ -48,9 +54,10 @@ class Header extends Component {
                 data-testid="header-profile-picture"
               />
               <h2 data-testid="header-player-name">{ name }</h2>
-              <span data-testid="header-score">{ score }</span>
+              <span data-testid="header-score">{ points }</span>
             </header>
-          )}
+          )
+        }
       </div>
     );
   }
@@ -68,6 +75,12 @@ const mapDispatchToProps = (dispatch) => ({
 Header.propTypes = {
   firstRender: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  resetGame: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
