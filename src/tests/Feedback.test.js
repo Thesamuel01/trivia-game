@@ -2,13 +2,18 @@ import React from "react";
 import { renderWithRouterAndRedux } from './renderWithRouterAndRedux';
 import { screen } from "@testing-library/react";
 import Feedback from "../pages/Feedback";
-import userEvent from "@testing-library/user-event";
+import App from '../App'
+// import userEvent from "@testing-library/user-event";
 
 describe('Testa a página de feedback', () => {
   it('Testa se a página é renderizada', () => {
-    renderWithRouterAndRedux(<Feedback/>)
+    const { history } = renderWithRouterAndRedux(<App/>)
+
+    history.push('/feedback/123')
+    const playerTextEl = screen.getByRole('heading', { level: 2 });
+    expect(playerTextEl).toBeInTheDocument();
   });
-})
+});
 
 /* describe('Testa a página de feedback', () => {
   
