@@ -16,6 +16,7 @@ class Feedback extends Component {
     const { playerDataGlobal } = this.props;
     this.setState({
       playerDataLocal: playerDataGlobal,
+      //
     });
   }
 

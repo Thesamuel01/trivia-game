@@ -143,7 +143,7 @@ class Game extends Component {
       category, correctAnswer, wrongAnswers, question, answers,
     } = currentQuestion;
     let wrongAnswerIndex = 0;
-
+    //
     return (
       <div className="buttonGame">
         <div data-testid="question-category">{ category }</div>
