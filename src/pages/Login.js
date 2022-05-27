@@ -42,6 +42,7 @@ class Login extends Component {
 
     if (ranking === null) {
       localStorage.createRanking({
+        assertions: 0,
         id: md5((Math.random() * LIMIT).toString()).toString(),
         name,
         score,
@@ -49,6 +50,7 @@ class Login extends Component {
       });
     } else {
       localStorage.addNewRankings({
+        assertions: 0,
         id: md5((Math.random() * LIMIT).toString()).toString(),
         name,
         score,

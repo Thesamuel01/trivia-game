@@ -11,6 +11,8 @@ import {
 import './Game.css';
 
 class Game extends Component {
+  hasMounted = false;
+
   constructor() {
     super();
 
@@ -40,12 +42,18 @@ class Game extends Component {
     } else {
       this.logout();
     }
+
     this.countDown();
+    this.hasMounted = true;
+  }
+
+  componentWillUnmount() {
+    this.hasMounted = false;
   }
 
   countDown = () => {
     const ONE_SECOND = 1000;
-    const TOTAL_TIME = 31000;
+    const TOTAL_TIME = 30000;
 
     this.clock = setInterval(() => {
       this.setState((prevState) => ({
@@ -54,7 +62,6 @@ class Game extends Component {
     }, ONE_SECOND);
 
     setTimeout(() => {
-      console.log('teste');
       this.handleOnUserAnswer(false);
       clearInterval(this.clock);
     }, TOTAL_TIME);
@@ -104,20 +111,21 @@ class Game extends Component {
   }
 
   handleOnUserAnswer = (isTheCorrectAnswer) => {
-    if (isTheCorrectAnswer) this.calcScore();
+    if (this.hasMounted) {
+      if (isTheCorrectAnswer) this.calcScore();
 
-    this.setState(({ indexQuestion }) => ({
-      indexQuestion: indexQuestion + 1,
-      answered: true,
-    }));
+      this.setState(({ indexQuestion }) => ({
+        indexQuestion: indexQuestion + 1,
+        answered: true,
+      }));
 
-    clearInterval(this.clock);
+      clearInterval(this.clock);
+    }
   }
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
     const { score, history, token } = this.props;
-
     const ranking = getRanking();
     const userRanking = ranking[ranking.length - 1];
 
@@ -133,6 +141,7 @@ class Game extends Component {
         answered: false,
         currentQuestion: { ...questionsArray[index] },
       }));
+      this.countDown();
     }
   }
 
@@ -200,7 +209,6 @@ class Game extends Component {
 
   render() {
     const { endRequisition, timer } = this.state;
-
     return (
       <div>
         <Header />

@@ -23,9 +23,8 @@ export const getRanking = () => {
 };
 
 export const addNewRankings = (newRanking) => {
-  console.log(newRanking);
   const oldRankings = getRanking();
-  console.log(oldRankings);
+
   saveRanking([...oldRankings, newRanking]);
 };
 

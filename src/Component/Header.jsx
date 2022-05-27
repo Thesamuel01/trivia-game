@@ -23,8 +23,6 @@ class Header extends Component {
     const { score: currentScore, firstRender } = this.props;
     const { timesPlayed } = this.state;
     const rankings = getRanking();
-    console.log(rankings);
-    console.log(timesPlayed);
     const { name, picture, score: scoreValueSaved } = rankings[timesPlayed];
     const score = firstRender ? scoreValueSaved : currentScore;
 
