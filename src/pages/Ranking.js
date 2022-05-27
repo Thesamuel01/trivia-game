@@ -6,6 +6,7 @@ export default class Ranking extends Component {
     const { history } = this.props;
 
     return (
+
       <>
         <h1 data-test-id="ranking-title">Ranking</h1>
         <button

@@ -31,6 +31,7 @@ class Feedback extends Component {
         />
         <section className="container">
           <h1 data-testid="feedback-text">
+
             {player.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>

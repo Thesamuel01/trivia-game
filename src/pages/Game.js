@@ -124,7 +124,9 @@ class Game extends Component {
     const { score, history, assertions } = this.props;
     const token = getToken();
     const ranking = getRanking();
+
     const userRanking = ranking[ranking.length - 1];
+
 
     this.setState({ timer: 30 });
 
