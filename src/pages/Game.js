@@ -36,6 +36,7 @@ class Game extends Component {
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(url);
     const { response_code: code, results } = await response.json();
+    console.log(results);
 
     if (code === 0) {
       this.saveQuestions(results);
@@ -125,7 +126,8 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, history, token } = this.props;
+    const { score, history } = this.props;
+    const token = getToken();
     const ranking = getRanking();
     const userRanking = ranking[ranking.length - 1];
 
@@ -155,7 +157,15 @@ class Game extends Component {
     return (
       <div className="buttonGame">
         <div data-testid="question-category">{ category }</div>
-        <div data-testid="question-text">{ question }</div>
+        <div data-testid="question-text">
+          {
+            question.replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&quot;/g, '"')
+              .replace(/&#039;/g, '\'')
+          }
+        </div>
         <div data-testid="answer-options">
           {answers.map((option, index) => {
             if (option === wrongAnswers) wrongAnswerIndex += 1;

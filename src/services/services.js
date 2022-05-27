@@ -8,10 +8,6 @@ const saveRanking = (ranking) => localStorage
 const readToken = () => localStorage.getItem(TOKEN_KEY);
 const saveToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 
-export const createRanking = (ranking) => {
-  saveRanking([ranking]);
-};
-
 export const getRanking = () => {
   let ranking = readRanking();
 
@@ -22,10 +18,11 @@ export const getRanking = () => {
   return ranking;
 };
 
-export const addNewRankings = (newRanking) => {
+export const addRanking = (ranking) => {
   const oldRankings = getRanking();
+  const rankings = oldRankings === null ? [ranking] : [...oldRankings, ranking];
 
-  saveRanking([...oldRankings, newRanking]);
+  saveRanking(rankings);
 };
 
 export const saveScore = (newScore, { id: userId }) => {
