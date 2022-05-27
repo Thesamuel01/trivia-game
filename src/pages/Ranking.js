@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { getRanking } from '../services/services';
 
 export default class Ranking extends Component {
   render() {
+    const NUMBER = -1;
     const { history } = this.props;
+    const data = getRanking();
+
+    const rankingData = data.sort((a, b) => {
+      if (a.score > b.score) return NUMBER;
+      if (a.score < b.score) return 1;
+      return 0;
+    });
 
     return (
 
       <>
         <h1 data-testid="ranking-title">Ranking</h1>
+
+        <section className="container">
+          {rankingData.map((ranking, index) => (
+            <div key={ ranking.id }>
+              <img src={ ranking.picture } alt="" />
+              <span data-testid={ `player-name-${index}` }>{ranking.name}</span>
+              <span data-testId={ `player-score-${index}` }>{ranking.score}</span>
+            </div>))}
+        </section>
         <button
           type="button"
           name="homeBtn"
