@@ -1,5 +1,5 @@
 import React from "react";
-import { renderWithRouterAndRedux } from './renderWithRouterAndRedux';
+import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 import { screen } from "@testing-library/react";
 import App from '../App'
 import Login from "../pages/Login";
