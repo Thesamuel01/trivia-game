@@ -2,44 +2,48 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Component/Header';
+import { getRanking, updateRefreshState } from '../services/services';
 // import style from '../css/Feedback.module.css';
 
 class Feedback extends Component {
-  constructor() {
-    super();
-    this.state = {
-      playerDataLocal: {},
-    };
-  }
-
   componentDidMount() {
-    const { playerDataGlobal } = this.props;
-    this.setState({
-      playerDataLocal: playerDataGlobal,
-    });
+    /*
+    APOS O PLAYER ENTRAR NA TELA DED FEEDBACK É SALVO A INFORMACAO QUE ELE CHEGOU AO FIM DO GAME
+    */
+    const rankings = getRanking();
+
+    updateRefreshState(rankings[rankings.length - 1]);
   }
 
   render() {
+    /*
+    AGORA QUANDO DA O REFRESH NA TELA DE FEEDBACK AS INFORMACOES SAO MANTIDAS
+    */
     const THREE = 3;
     const { history } = this.props;
-    const { playerDataLocal } = this.state;
+    const currentRanking = getRanking();
+    const player = currentRanking[currentRanking.length - 1];
+
     return (
       <div className="background">
-
-        <Header />
+        <Header
+          history={ history }
+        />
         <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions >= THREE ? 'Well Done!' : 'Could be better...' }
+
+            {player.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>
-          <div
-            className="correctValue"
-            data-testid="feedback-total-question"
-          >
-            {playerDataLocal.assertions}
+          <div>
+            Você acertou
+            <span data-testid="feedback-total-question">{` ${player.assertions} `}</span>
+            Perguntas
           </div>
-          <div data-testid="feedback-total-score">
-            {playerDataLocal.score}
+          <div>
+            Um total de
+            <span data-testid="feedback-total-score">{` ${player.score} `}</span>
+            pontos
           </div>
           <button
             type="button"
@@ -68,7 +72,12 @@ const mapStateToProps = (state) => ({
 });
 
 Feedback.propTypes = {
-  playerDataGlobal: PropTypes.arrayOf().isRequired,
+  playerDataGlobal: PropTypes.shape({
+    assertions: PropTypes.number.isRequired,
+    score: PropTypes.number.isRequired,
+    gravatarEmail: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
 };
 

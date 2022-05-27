@@ -8,10 +8,6 @@ const saveRanking = (ranking) => localStorage
 const readToken = () => localStorage.getItem(TOKEN_KEY);
 const saveToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 
-export const createRanking = (ranking) => {
-  saveRanking([ranking]);
-};
-
 export const getRanking = () => {
   let ranking = readRanking();
 
@@ -22,19 +18,20 @@ export const getRanking = () => {
   return ranking;
 };
 
-export const addNewRankings = (newRanking) => {
+export const addRanking = (ranking) => {
   const oldRankings = getRanking();
+  const rankings = oldRankings === null ? [ranking] : [...oldRankings, ranking];
 
-  saveRanking([...oldRankings, newRanking]);
+  saveRanking(rankings);
 };
 
-export const saveScore = (newScore, userName) => {
-  console.log('new', newScore, '\n user', userName);
+export const updateRankig = (newScore, assertions, { id: userId }) => {
   const rankings = readRanking();
-  const rankingToBeUpdate = rankings.find(({ name }) => name === userName);
-  const oldRankings = rankings.filter(({ name }) => name !== userName);
+  const rankingToBeUpdate = rankings.find(({ id }) => id === userId);
+  const oldRankings = rankings.filter(({ id }) => id !== userId);
 
   rankingToBeUpdate.score = newScore;
+  rankingToBeUpdate.assertions = assertions;
 
   saveRanking([...oldRankings, rankingToBeUpdate]);
 };
@@ -54,3 +51,10 @@ export const createToken = (token) => {
 };
 
 export const clearLocalStorage = () => localStorage.clear();
+
+export const updateRefreshState = (ranking) => {
+  const oldRankings = readRanking().filter(({ id }) => id !== ranking.id);
+  ranking.gotRefresh = true;
+
+  saveRanking([...oldRankings, ranking]);
+};

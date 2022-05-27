@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { getTokenThunk, saveUser, resetStore,
 } from '../redux/actions/actions';
-import * as localStorage from '../services/services';
+import { addRanking, createToken } from '../services/services';
 
 class Login extends Component {
   constructor() {
@@ -34,25 +34,21 @@ class Login extends Component {
 
   saveInfosOnLocalStorage = () => {
     const { name, gravatarEmail, token } = this.props;
-    const ranking = localStorage.getRanking();
     const hash = md5(gravatarEmail).toString();
     const picture = `https://www.gravatar.com/avatar/${hash}`;
     const score = 0;
+    const LIMIT = 5000;
 
-    if (ranking === null) {
-      localStorage.createRanking({
-        name,
-        score,
-        picture,
-      });
-    } else {
-      localStorage.addNewRankings({
-        name,
-        score,
-        picture,
-      });
-    }
-    localStorage.createToken(token);
+    addRanking({
+      assertions: 0,
+      id: md5((Math.random() * LIMIT).toString()).toString(),
+      name,
+      score,
+      picture,
+      gotRefresh: false,
+    });
+
+    createToken(token);
   }
 
   handleSubmit = async (event) => {
@@ -79,7 +75,7 @@ class Login extends Component {
     return (
       <>
         <div>
-          Login
+          <h2>Login</h2>
           <form onSubmit={ this.handleSubmit }>
             <label htmlFor="username">
               Username
