@@ -1,42 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getRanking, saveScore } from '../services/services';
+import { getRanking, updateRankig } from '../services/services';
+import { resetStore } from '../redux/actions/actions';
 
 class Header extends Component {
   constructor() {
     super();
 
     this.state = {
-      timesPlayed: getRanking().length - 1,
+      endRender: false,
     };
   }
 
   componentDidMount() {
-    const { score } = this.props;
-    const ranking = getRanking();
-    const userRanking = ranking[ranking.length - 1];
-    saveScore(score, userRanking);
+    const { history: { location: { pathname } }, resetGame } = this.props;
+    const rankings = getRanking();
+    const currentRanking = rankings[rankings.length - 1];
+    const hasRefresh = currentRanking.gotRefresh && !pathname.includes('feedback');
+
+    if (hasRefresh) {
+      updateRankig(0, 0, currentRanking);
+      resetGame();
+    }
+
+    this.setState({
+      endRender: true,
+    });
   }
 
   render() {
+    const { endRender } = this.state;
     const { score: currentScore, firstRender } = this.props;
-    const { timesPlayed } = this.state;
-    const rankings = getRanking();
-    const { name, picture, score: scoreValueSaved } = rankings[timesPlayed];
+    const rankingsSaved = getRanking();
+    const { name, picture, score: scoreValueSaved } = rankingsSaved[rankingsSaved.length - 1];
     const score = firstRender ? scoreValueSaved : currentScore;
 
     return (
       <div>
-        <header>
-          <img
-            alt="user"
-            src={ picture }
-            data-testid="header-profile-picture"
-          />
-          <h2 data-testid="header-player-name">{ name }</h2>
-          <span data-testid="header-score">{ score }</span>
-        </header>
+        {
+          endRender
+          && (
+            <header>
+              <img
+                alt="user"
+                src={ picture }
+                data-testid="header-profile-picture"
+              />
+              <h2 data-testid="header-player-name">{ name }</h2>
+              <span data-testid="header-score">{ score }</span>
+            </header>
+          )}
       </div>
     );
   }
@@ -47,9 +61,13 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  resetGame: () => dispatch(resetStore()),
+});
+
 Header.propTypes = {
   firstRender: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Component/Header';
+import { getRanking, updateRefreshState } from '../services/services';
 // import style from '../css/Feedback.module.css';
 
 class Feedback extends Component {
@@ -13,19 +14,27 @@ class Feedback extends Component {
   }
 
   componentDidMount() {
-    const { playerDataGlobal } = this.props;
-    this.setState({
-      playerDataLocal: playerDataGlobal,
-    });
+    // const { playerDataGlobal } = this.props;
+    const rankings = getRanking();
+
+    // this.setState({
+    //   playerDataLocal: playerDataGlobal,
+    // });
+
+    updateRefreshState(rankings[rankings.length - 1]);
   }
 
   render() {
     const THREE = 3;
     const { history } = this.props;
-    const { playerDataLocal } = this.state;
+    const currentRanking = getRanking();
+    const playerDataLocal = currentRanking[currentRanking.length - 1];
+
     return (
       <div className="background">
-        <Header />
+        <Header
+          history={ history }
+        />
         <section className="container">
           <h1 data-testid="feedback-text">
             {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }

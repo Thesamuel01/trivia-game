@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
 import Timer from '../Component/Timer';
-import { clearLocalStorage, getToken, saveScore, getRanking } from '../services/services';
+import {
+  clearLocalStorage,
+  getToken,
+  updateRankig,
+  getRanking,
+} from '../services/services';
 import {
   updateAssertionsNumber,
   updateScorePoints,
@@ -36,7 +41,6 @@ class Game extends Component {
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(url);
     const { response_code: code, results } = await response.json();
-    console.log(results);
 
     if (code === 0) {
       this.saveQuestions(results);
@@ -126,7 +130,7 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, history } = this.props;
+    const { score, history, assertions } = this.props;
     const token = getToken();
     const ranking = getRanking();
     const userRanking = ranking[ranking.length - 1];
@@ -134,7 +138,7 @@ class Game extends Component {
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
-      saveScore(score, userRanking);
+      updateRankig(score, assertions, userRanking);
 
       const redirectId = `/feedback/${token}`;
       history.push(redirectId);
@@ -219,9 +223,12 @@ class Game extends Component {
 
   render() {
     const { endRequisition, timer } = this.state;
+    const { history } = this.props;
     return (
       <div>
-        <Header />
+        <Header
+          history={ history }
+        />
         <Timer countDown={ timer } />
         <section>
           {
@@ -240,14 +247,12 @@ Game.propTypes = {
   updateScore: PropTypes.func.isRequired,
   updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
-  //  name: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
   name: state.player.name,
-  assertions: state.player.updateAssertions,
+  assertions: state.player.assertions,
   token: state.player.token,
 });
 

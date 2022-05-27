@@ -25,12 +25,13 @@ export const addRanking = (ranking) => {
   saveRanking(rankings);
 };
 
-export const saveScore = (newScore, { id: userId }) => {
+export const updateRankig = (newScore, assertions, { id: userId }) => {
   const rankings = readRanking();
   const rankingToBeUpdate = rankings.find(({ id }) => id === userId);
   const oldRankings = rankings.filter(({ id }) => id !== userId);
 
   rankingToBeUpdate.score = newScore;
+  rankingToBeUpdate.assertions = assertions;
 
   saveRanking([...oldRankings, rankingToBeUpdate]);
 };
@@ -50,3 +51,10 @@ export const createToken = (token) => {
 };
 
 export const clearLocalStorage = () => localStorage.clear();
+
+export const updateRefreshState = (ranking) => {
+  const oldRankings = readRanking().filter(({ id }) => id !== ranking.id);
+  ranking.gotRefresh = true;
+
+  saveRanking([...oldRankings, ranking]);
+};
