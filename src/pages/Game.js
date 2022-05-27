@@ -120,7 +120,7 @@ class Game extends Component {
 
     const ranking = getRanking();
     const { name } = ranking[ranking.length - 1];
-    
+
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {

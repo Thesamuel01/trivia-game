@@ -29,17 +29,17 @@ class Feedback extends Component {
         <Header />
         <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
+            {playerDataLocal.assertions >= THREE ? 'Well Done!' : 'Could be better...' }
 
           </h1>
           <div
             className="correctValue"
             data-testid="feedback-total-question"
           >
-            {`Você acertou ${playerDataLocal.assertions} Perguntas`}
+            {playerDataLocal.assertions}
           </div>
           <div data-testid="feedback-total-score">
-            {`Um total de ${playerDataLocal.score} pontos`}
+            {playerDataLocal.score}
           </div>
           <button
             type="button"
