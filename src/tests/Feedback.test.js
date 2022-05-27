@@ -1,6 +1,5 @@
 import React from "react";
 import { screen } from "@testing-library/react";
-import Feedback from "../pages/Feedback";
 import App from '../App'
 import { addRanking, createToken } from "../services/services";
 import { PLAYER_INFOS, TOKEN } from "./mocks";
