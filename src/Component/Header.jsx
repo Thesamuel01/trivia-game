@@ -14,6 +14,11 @@ class Header extends Component {
   }
 
   componentDidMount() {
+    /*
+    LOGICA PARA RESOLVER O BUG DO REFRESH
+    AGORA CASO A PESSOA APERTE O VOLTAR NA TELA DE FEEDBACK, O HEADER ZERA OS VALORES
+    COMO SE FOSSE UMA TENTATIVA NOVA, MAS NO MESMO PERFIL DE USUARIO
+    */
     const { history: { location: { pathname } }, resetGame } = this.props;
     const rankings = getRanking();
     const currentRanking = rankings[rankings.length - 1];

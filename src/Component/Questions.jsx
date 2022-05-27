@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+/*
+COMPONENTE RESPONSAVEL PELAS QUESTOES!!!
+*/
 class Questions extends Component {
   formatString = (string) => string.replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')

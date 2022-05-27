@@ -7,12 +7,18 @@ import { getRanking, updateRefreshState } from '../services/services';
 
 class Feedback extends Component {
   componentDidMount() {
+    /*
+    APOS O PLAYER ENTRAR NA TELA DED FEEDBACK É SALVO A INFORMACAO QUE ELE CHEGOU AO FIM DO GAME
+    */
     const rankings = getRanking();
 
     updateRefreshState(rankings[rankings.length - 1]);
   }
 
   render() {
+    /*
+    AGORA QUANDO DA O REFRESH NA TELA DE FEEDBACK AS INFORMACOES SAO MANTIDAS
+    */
     const THREE = 3;
     const { history } = this.props;
     const currentRanking = getRanking();

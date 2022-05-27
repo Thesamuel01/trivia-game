@@ -102,6 +102,9 @@ class Game extends Component {
     const SCORE_CONST = 10;
     const score = SCORE_CONST + (timer * pointsBydifficulty[difficulty]);
 
+    /*
+      AGORA SOMENTE UMA ACTION É RESPONSAVEL POR ATUALIZAR O ASSERTIONS E SCORE DO REDUX
+    */
     updateScore(score, 1);
   }
 
@@ -126,6 +129,9 @@ class Game extends Component {
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
+      /*
+        AGORA É SALVO NO LOCAL STORAGE OS ASSERTIONS
+      */
       updateRankig(score, assertions, userRanking);
 
       history.push(`/feedback/${token}`);
