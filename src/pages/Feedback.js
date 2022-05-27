@@ -2,42 +2,47 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../Component/Header';
+import { getRanking, updateRefreshState } from '../services/services';
 // import style from '../css/Feedback.module.css';
 
 class Feedback extends Component {
-  constructor() {
-    super();
-    this.state = {
-      playerDataLocal: {},
-    };
-  }
-
   componentDidMount() {
-    const { playerDataGlobal } = this.props;
-    this.setState({
-      playerDataLocal: playerDataGlobal,
-    });
+    /*
+    APOS O PLAYER ENTRAR NA TELA DED FEEDBACK É SALVO A INFORMACAO QUE ELE CHEGOU AO FIM DO GAME
+    */
+    const rankings = getRanking();
+
+    updateRefreshState(rankings[rankings.length - 1]);
   }
 
   render() {
+    /*
+    AGORA QUANDO DA O REFRESH NA TELA DE FEEDBACK AS INFORMACOES SAO MANTIDAS
+    */
     const THREE = 3;
     const { history } = this.props;
-    const { playerDataLocal } = this.state;
+    const currentRanking = getRanking();
+    const player = currentRanking[currentRanking.length - 1];
+
     return (
       <div className="background">
-        <Header />
+        <Header
+          history={ history }
+        />
         <section className="container">
           <h1 data-testid="feedback-text">
-            {playerDataLocal.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
+            {player.assertions <= THREE ? 'Could be better...' : 'Well Done!' }
 
           </h1>
-          <div
-            data-testid="feedback-total-question"
-          >
-            {`Você acertou ${playerDataLocal.assertions} Perguntas`}
+          <div>
+            Você acertou
+            <span data-testid="feedback-total-question">{` ${player.assertions} `}</span>
+            Perguntas
           </div>
-          <div data-testid="feedback-total-score">
-            {`Um total de ${playerDataLocal.score} pontos`}
+          <div>
+            Um total de
+            <span data-testid="feedback-total-score">{` ${player.score} `}</span>
+            pontos
           </div>
           <button
             type="button"

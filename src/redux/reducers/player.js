@@ -3,8 +3,7 @@ import {
   GET_TOKEN_ERROR,
   GET_TOKEN_LOADING,
   GET_TOKEN_SUCCESS,
-  UPDATE_SCORE,
-  UPDATE_ASSERTIONS,
+  UPDATE_POINTS,
   RESET_STORE,
 } from '../actions/actions';
 
@@ -44,16 +43,12 @@ const player = (state = INITIAL_STATE, action) => {
       isFetching: false,
       error: action.payload.error,
     };
-  case UPDATE_SCORE:
+  case UPDATE_POINTS:
     return {
       ...state,
       score: state.score + action.payload.score,
-      firstRender: false,
-    };
-  case UPDATE_ASSERTIONS:
-    return {
-      ...state,
       assertions: state.assertions + action.payload.assertions,
+      firstRender: false,
     };
   case RESET_STORE:
     return {
