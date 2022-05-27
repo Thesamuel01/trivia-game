@@ -1,41 +1,70 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getRanking, saveScore } from '../services/services';
+import { getRanking, updateRankig } from '../services/services';
+import { resetStore } from '../redux/actions/actions';
 
 class Header extends Component {
   constructor() {
     super();
 
     this.state = {
-      timesPlayed: getRanking().length - 1,
+      endRender: false,
     };
   }
 
   componentDidMount() {
-    const { score } = this.props;
-    const ranking = getRanking();
-    const { name } = ranking[ranking.length - 1];
-    saveScore(score, name);
+    /*
+
+    LOGICA PARA RESOLVER O BUG DO REFRESH
+    AGORA CASO A PESSOA APERTE O VOLTAR NA TELA DE FEEDBACK, O HEADER ZERA OS VALORES
+    COMO SE FOSSE UMA TENTATIVA NOVA, MAS NO MESMO PERFIL DE USUARIO
+
+    */
+    const { history: { location: { pathname } }, resetGame } = this.props;
+    const rankings = getRanking();
+    const currentRanking = rankings[rankings.length - 1];
+    const hasRefresh = currentRanking.gotRefresh && !pathname.includes('feedback');
+
+    if (hasRefresh) {
+      updateRankig(0, 0, currentRanking);
+      resetGame();
+    }
+
+    this.setState({
+      endRender: true,
+    });
+  }
+
+  returnHeaderInfos = () => {
+    const { score: currentScore, firstRender } = this.props;
+    const rankingsSaved = getRanking();
+    const { name, picture, score } = rankingsSaved[rankingsSaved.length - 1];
+    const points = firstRender ? score : currentScore;
+
+    return { name, picture, points };
   }
 
   render() {
-    const { score: currentScore, firstRender } = this.props;
-    const { timesPlayed } = this.state;
-    const { name, picture, score: scoreValueSaved } = getRanking()[timesPlayed];
-    const score = firstRender ? scoreValueSaved : currentScore;
+    const { endRender } = this.state;
+    const { name, picture, points } = this.returnHeaderInfos();
 
     return (
       <div>
-        <header>
-          <img
-            alt="user"
-            src={ picture }
-            data-testid="header-profile-picture"
-          />
-          <h2 data-testid="header-player-name">{ name }</h2>
-          <span data-testid="header-score">{ score }</span>
-        </header>
+        {
+          endRender
+          && (
+            <header>
+              <img
+                alt="user"
+                src={ picture }
+                data-testid="header-profile-picture"
+              />
+              <h2 data-testid="header-player-name">{ name }</h2>
+              <span data-testid="header-score">{ points }</span>
+            </header>
+          )
+        }
       </div>
     );
   }
@@ -46,9 +75,19 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  resetGame: () => dispatch(resetStore()),
+});
+
 Header.propTypes = {
   firstRender: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  resetGame: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

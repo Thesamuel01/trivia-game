@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
 import Timer from '../Component/Timer';
-import { clearLocalStorage, getToken, saveScore, getRanking } from '../services/services';
+import Questions from '../Component/Questions';
 import {
-  updateAssertionsNumber,
-  updateScorePoints,
-} from '../redux/actions/actions';
+  clearLocalStorage,
+  getToken,
+  updateRankig,
+  getRanking,
+} from '../services/services';
+import { updatePoints } from '../redux/actions/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -36,16 +39,17 @@ class Game extends Component {
     const { response_code: code, results } = await response.json();
 
     if (code === 0) {
-      this.saveQuestions(results);
+      this.saveQuestionsInState(results);
     } else {
       this.logout();
     }
+
     this.countDown();
   }
 
   countDown = () => {
     const ONE_SECOND = 1000;
-    const TOTAL_TIME = 31000;
+    const TOTAL_TIME = 30000;
 
     this.clock = setInterval(() => {
       this.setState((prevState) => ({
@@ -54,13 +58,12 @@ class Game extends Component {
     }, ONE_SECOND);
 
     setTimeout(() => {
-      console.log('teste');
       this.handleOnUserAnswer(false);
       clearInterval(this.clock);
     }, TOTAL_TIME);
   }
 
-  saveQuestions = (results) => {
+  saveQuestionsInState = (results) => {
     const questions = results.map(({
       category, difficulty, question,
       correct_answer: correctAnswer, incorrect_answers: wrongAnswers,
@@ -93,14 +96,16 @@ class Game extends Component {
   }
 
   calcScore = () => {
-    const { updateScore, updateAssertions } = this.props;
+    const { updateScore } = this.props;
     const { pointsBydifficulty, timer, currentQuestion: { difficulty } } = this.state;
 
     const SCORE_CONST = 10;
     const score = SCORE_CONST + (timer * pointsBydifficulty[difficulty]);
 
-    updateScore(score);
-    updateAssertions(1);
+    /*
+      AGORA SOMENTE UMA ACTION É RESPONSAVEL POR ATUALIZAR O ASSERTIONS E SCORE DO REDUX
+    */
+    updateScore(score, 1);
   }
 
   handleOnUserAnswer = (isTheCorrectAnswer) => {
@@ -116,99 +121,52 @@ class Game extends Component {
 
   goToNextQuestion = () => {
     const { indexQuestion, questions } = this.state;
-    const { score, history, token } = this.props;
-
+    const { score, history, assertions } = this.props;
+    const token = getToken();
     const ranking = getRanking();
-    const { name } = ranking[ranking.length - 1];
+
+    const userRanking = ranking[ranking.length - 1];
 
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
-      // SALVA AS INFORMACOES DA PARTIDA NO LOCAL STORAGE
-      console.log(score);
-      saveScore(score, name);
-      const redirectId = `/feedback/${token}`;
-      history.push(redirectId);
+      /*
+        AGORA É SALVO NO LOCAL STORAGE OS ASSERTIONS
+      */
+      updateRankig(score, assertions, userRanking);
+
+      history.push(`/feedback/${token}`);
     } else {
       this.setState(({ indexQuestion: index, questions: questionsArray }) => ({
         answered: false,
         currentQuestion: { ...questionsArray[index] },
       }));
+
+      this.countDown();
     }
   }
 
-  renderQuestion = () => {
-    const { currentQuestion, answered } = this.state;
-    const {
-      category, correctAnswer, wrongAnswers, question, answers,
-    } = currentQuestion;
-    let wrongAnswerIndex = 0;
-    //
-    return (
-      <div className="buttonGame">
-        <div data-testid="question-category">{ category }</div>
-        <div data-testid="question-text">{ question }</div>
-        <div data-testid="answer-options">
-          {answers.map((option, index) => {
-            if (option === wrongAnswers) wrongAnswerIndex += 1;
-
-            const button = option === correctAnswer
-              ? (
-                <button
-                  key={ index }
-                  className={ answered ? 'buttonGameCorrect' : '' }
-                  type="button"
-                  data-testid="correct-answer"
-                  disabled={ answered }
-                  onClick={ () => this.handleOnUserAnswer(true, currentQuestion) }
-                >
-                  { option }
-                </button>
-              )
-              : (
-                <button
-                  key={ index }
-                  className={ answered ? 'buttonGameError' : '' }
-                  type="button"
-                  data-testid={ `wrong-answer-${wrongAnswerIndex}` }
-                  disabled={ answered }
-                  onClick={ () => this.handleOnUserAnswer(false, currentQuestion) }
-                >
-                  { option }
-                </button>
-              );
-
-            return button;
-          })}
-        </div>
-        {
-          answered
-            && (
-              <div>
-                <button
-                  data-testid="btn-next"
-                  type="button"
-                  onClick={ this.goToNextQuestion }
-                >
-                  Next
-                </button>
-              </div>
-            )
-        }
-      </div>
-    );
-  }
-
   render() {
-    const { endRequisition, timer } = this.state;
+    const { endRequisition, timer, answered, currentQuestion } = this.state;
+    const { history } = this.props;
 
     return (
       <div>
-        <Header />
+        <Header
+          history={ history }
+        />
         <Timer countDown={ timer } />
         <section>
           {
-            endRequisition && this.renderQuestion()
+            endRequisition
+            && (
+              <Questions
+                currentQuestion={ currentQuestion }
+                answered={ answered }
+                handleOnUserAnswer={ this.handleOnUserAnswer }
+                goToNextQuestion={ this.goToNextQuestion }
+              />
+            )
           }
         </section>
       </div>
@@ -221,23 +179,19 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   updateScore: PropTypes.func.isRequired,
-  updateAssertions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
-  //  name: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
   name: state.player.name,
-  assertions: state.player.updateAssertions,
+  assertions: state.player.assertions,
   token: state.player.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateScore: (score) => dispatch(updateScorePoints(score)),
-  updateAssertions:
-    (numberOfAssertions) => dispatch(updateAssertionsNumber(numberOfAssertions)),
+  updateScore: (score, assertions) => dispatch(updatePoints(score, assertions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
