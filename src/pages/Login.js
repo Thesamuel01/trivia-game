@@ -56,7 +56,6 @@ class Login extends Component {
 
     const { userName, userEmail } = this.state;
     const { getToken, history, saveUserInfos } = this.props;
-
     await getToken();
     await saveUserInfos(userName, userEmail);
     this.saveInfosOnLocalStorage();
