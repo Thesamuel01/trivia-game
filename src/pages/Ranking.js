@@ -4,16 +4,8 @@ import { getRanking, sortRanking } from '../services/services';
 
 export default class Ranking extends Component {
   render() {
-    // const NUMBER = -1;
     const { history } = this.props;
     const data = getRanking();
-
-    // const rankingData = data.sort((a, b) => {
-    //   if (a.score > b.score) return NUMBER;
-    //   if (a.score < b.score) return 1;
-    //   return 0;
-    // });
-
     const rankingData = sortRanking(data);
 
     return (
