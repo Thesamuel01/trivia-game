@@ -23,13 +23,14 @@ class Login extends Component {
   }
 
   handleOnChange = ({ target: { name, value } }) => {
-    const { userEmail, userName } = this.state;
     this.setState({
       [name]: value,
+    }, () => {
+      const { userEmail, userName } = this.state;
+      if (userEmail.length > 0 && userName.length > 0) {
+        this.setState({ buttonDisabled: false });
+      }
     });
-    if (userEmail.length > 0 && userName.length > 0) {
-      this.setState({ buttonDisabled: false });
-    }
   }
 
   saveInfosOnLocalStorage = () => {
