@@ -2,7 +2,7 @@ import React from "react";
 import { screen } from "@testing-library/react";
 import App from '../App'
 import { addRanking, createToken } from "../services/services";
-import { PLAYER_INFOS, TOKEN } from "./mocks";
+import { FIRST_MATCH, PLAYER_INFOS, TOKEN } from "./mocks";
 import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 import userEvent from "@testing-library/user-event";
 
@@ -16,6 +16,18 @@ describe('Testa a página de feedback', () => {
     history.push(`/feedback/${TOKEN}`)
 
     const playerTextEl = screen.getByRole('heading', { level: 2 });
+    expect(playerTextEl).toBeInTheDocument();
+  });
+
+  it('Testa se o jogador acertou menos de 3 questões renderiza a mensagem "Could be better..."', () => {
+    const player = FIRST_MATCH;
+    addRanking(player);
+    createToken(TOKEN);
+  
+    const { history } = renderWithRouterAndRedux(<App/>);
+    history.push(`/feedback/${TOKEN}`)
+
+    const playerTextEl = screen.getByRole('heading', { level: 1, name: /Could be better.../i});
     expect(playerTextEl).toBeInTheDocument();
   });
 });
