@@ -106,6 +106,8 @@ class Game extends Component {
   }
 
   handleOnUserAnswer = (isTheCorrectAnswer) => {
+    clearInterval(this.clock);
+
     if (isTheCorrectAnswer) this.calcScore();
 
     this.setState(({ indexQuestion }) => ({
@@ -115,7 +117,6 @@ class Game extends Component {
   }
 
   goToNextQuestion = () => {
-    clearInterval(this.clock);
     const { indexQuestion, questions } = this.state;
     const { score, history, assertions } = this.props;
     const token = getToken();
