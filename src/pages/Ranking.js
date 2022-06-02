@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getRanking } from '../services/services';
+import styles from '../Css/Ranking.module.css';
 
 export default class Ranking extends Component {
   render() {
@@ -16,13 +17,12 @@ export default class Ranking extends Component {
 
     return (
 
-      <>
+      <main>
         <h1 data-testid="ranking-title">Ranking</h1>
-
-        <section className="container">
+        <section className={ styles.container }>
           {rankingData.map((ranking, index) => (
-            <div key={ ranking.id }>
-              <img src={ ranking.picture } alt="" />
+            <div className={ styles.ranking } key={ ranking.id }>
+              <img className={ styles.imgRanking } src={ ranking.picture } alt="" />
               <span data-testid={ `player-name-${index}` }>{ranking.name}</span>
               <span data-testId={ `player-score-${index}` }>{ranking.score}</span>
             </div>))}
@@ -35,7 +35,7 @@ export default class Ranking extends Component {
         >
           Home
         </button>
-      </>
+      </main>
     );
   }
 }
