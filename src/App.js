@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.css';
-import { Switch, Route } from 'react-router-dom';
-import Game from './pages/Game';
-import Setup from './pages/Setup';
-import NotFound from './pages/NotFound';
-import Login from './pages/Login';
+import { Route, Switch } from 'react-router-dom';
 import Feedback from './pages/Feedback';
+import Game from './pages/Game';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 import Ranking from './pages/Ranking';
+import Setup from './pages/Setup';
 
 export default function App() {
   return (

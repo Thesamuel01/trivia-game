@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-import { getTokenThunk, saveUser, resetStore,
-} from '../redux/actions/actions';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import trivia from '../image/logoTrivia.png';
+import { getTokenThunk, resetStore, saveUser } from '../redux/actions/actions';
 import { addRanking, createToken } from '../services/services';
 
 class Login extends Component {
@@ -72,51 +72,61 @@ class Login extends Component {
   render() {
     const { userName, userEmail, buttonDisabled } = this.state;
     return (
-      <>
-        <div>
-          <h2>Login</h2>
-          <form onSubmit={ this.handleSubmit }>
-            <label htmlFor="username">
-              Username
-              <input
-                name="userName"
-                id="username"
-                type="text"
-                data-testid="input-player-name"
-                value={ userName }
-                onChange={ this.handleOnChange }
-              />
-            </label>
-            <label htmlFor="email">
-              E-mail
-              <input
-                name="userEmail"
-                id="email"
-                type="email"
-                data-testid="input-gravatar-email"
-                value={ userEmail }
-                onChange={ this.handleOnChange }
-              />
-            </label>
-            <button
-              type="submit"
-              name="enter"
-              disabled={ buttonDisabled }
-              data-testid="btn-play"
-            >
-              Play
-            </button>
-          </form>
-        </div>
-        <button
-          data-testid="btn-settings"
-          type="button"
-          onClick={ this.handleOnClick }
-        >
-          configurações
-        </button>
+      <div className="loginContainerPai">
+        <section className="loginSection">
+          <div className="loginContainer">
+            <h2 className="loginText">Login</h2>
+            <form className="loginForm" onSubmit={ this.handleSubmit }>
 
-      </>
+              <label htmlFor="username" className="loginLabel">
+                <span className="loginInputName"> Username</span>
+                <input
+                  className="loginInput"
+                  name="userName"
+                  id="username"
+                  type="text"
+                  data-testid="input-player-name"
+                  placeholder="Nome de usuário"
+                  value={ userName }
+                  onChange={ this.handleOnChange }
+                />
+              </label>
+              <label htmlFor="email" className="loginLabel">
+
+                <spam className="loginInputName">E-mail</spam>
+                <input
+                  className="loginInput"
+                  name="userEmail"
+                  placeholder="Insira o email"
+                  id="email"
+                  type="email"
+                  data-testid="input-gravatar-email"
+                  value={ userEmail }
+                  onChange={ this.handleOnChange }
+                />
+              </label>
+              <button
+                className="loginButtonPlay"
+                type="submit"
+                name="enter"
+                disabled={ buttonDisabled }
+                data-testid="btn-play"
+              >
+                Play
+              </button>
+            </form>
+          </div>
+          <button
+            className="loginButtonConfigure"
+            data-testid="btn-settings"
+            type="button"
+            onClick={ this.handleOnClick }
+          >
+            configurações
+          </button>
+        </section>
+        <img alt="logo" className="loginLogoTrivia" src={ trivia } />
+      </div>
     );
   }
 }

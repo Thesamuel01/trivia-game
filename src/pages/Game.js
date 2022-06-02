@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../Component/Header';
-import Timer from '../Component/Timer';
 import Questions from '../Component/Questions';
-import {
-  clearLocalStorage,
-  getToken,
-  updateRankig,
-  getRanking,
-} from '../services/services';
+import Timer from '../Component/Timer';
 import { updatePoints } from '../redux/actions/actions';
+import {
+  clearLocalStorage, getRanking, getToken,
+  // eslint-disable-next-line comma-dangle
+  updateRankig
+} from '../services/services';
 import './Game.css';
 
 class Game extends Component {
