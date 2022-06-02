@@ -6,7 +6,7 @@ class Timer extends Component {
     const { countDown } = this.props;
     return (
       <div>
-        { countDown }
+        { `Timer: ${countDown}` }
       </div>
     );
   }

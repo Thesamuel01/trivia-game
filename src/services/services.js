@@ -58,3 +58,14 @@ export const updateRefreshState = (ranking) => {
 
   saveRanking([...oldRankings, ranking]);
 };
+
+export const sortRanking = (data) => {
+  const NUMBER = -1;
+  data.sort((a, b) => {
+    if (a.score > b.score) return NUMBER;
+    if (a.score < b.score) return 1;
+    return 0;
+  });
+
+  return data;
+};

@@ -46,20 +46,21 @@ class Game extends Component {
     this.countDown();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.timer === 1) {
+      this.handleOnUserAnswer(false);
+      clearInterval(this.clock);
+    }
+  }
+
   countDown = () => {
     const ONE_SECOND = 1000;
-    const TOTAL_TIME = 30000;
 
     this.clock = setInterval(() => {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
       }));
     }, ONE_SECOND);
-
-    setTimeout(() => {
-      this.handleOnUserAnswer(false);
-      clearInterval(this.clock);
-    }, TOTAL_TIME);
   }
 
   saveQuestionsInState = (results) => {
@@ -100,22 +101,18 @@ class Game extends Component {
 
     const SCORE_CONST = 10;
     const score = SCORE_CONST + (timer * pointsBydifficulty[difficulty]);
-
-    /*
-      AGORA SOMENTE UMA ACTION É RESPONSAVEL POR ATUALIZAR O ASSERTIONS E SCORE DO REDUX
-    */
     updateScore(score, 1);
   }
 
   handleOnUserAnswer = (isTheCorrectAnswer) => {
+    clearInterval(this.clock);
+
     if (isTheCorrectAnswer) this.calcScore();
 
     this.setState(({ indexQuestion }) => ({
       indexQuestion: indexQuestion + 1,
       answered: true,
     }));
-
-    clearInterval(this.clock);
   }
 
   goToNextQuestion = () => {
@@ -129,9 +126,6 @@ class Game extends Component {
     this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
-      /*
-        AGORA É SALVO NO LOCAL STORAGE OS ASSERTIONS
-      */
       updateRankig(score, assertions, userRanking);
 
       history.push(`/feedback/${token}`);
@@ -140,7 +134,6 @@ class Game extends Component {
         answered: false,
         currentQuestion: { ...questionsArray[index] },
       }));
-
       this.countDown();
     }
   }
