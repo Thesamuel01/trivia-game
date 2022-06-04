@@ -45,6 +45,16 @@ html {
     top:38%;
     left:50%;
     transform: translate(-50%, -50%); 
+    animation: img 1s 1 linear;
+  }
+
+  @keyframes img {
+    from {
+      top: 0%;
+    }
+    to {
+      bottom: 0%;
+    }
   }
 
   .loginSection {
@@ -68,6 +78,15 @@ html {
     font-weight: 700;
     display: flex;
     align-items: center;
+  }
+
+  .loginButtonConfigure{
+    background-color:#161217;
+    color: whitesmoke;
+    height: 50px;
+    padding-top: 10px;
+    border: none;
+    margin-left: 180px;
   }
 
   .loginText h2 {

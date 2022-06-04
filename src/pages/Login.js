@@ -1,6 +1,7 @@
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { BsFillGearFill } from 'react-icons/bs';
 import { connect } from 'react-redux';
 import trivia from '../image/logoTrivia.png';
 import { getTokenThunk, resetStore, saveUser } from '../redux/actions/actions';
@@ -123,7 +124,7 @@ class Login extends Component {
             type="button"
             onClick={ this.handleOnClick }
           >
-            configurações
+            <BsFillGearFill />
           </button>
         </section>
         <img alt="logo" className="loginLogoTrivia" src={ trivia } />
