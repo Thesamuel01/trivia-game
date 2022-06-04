@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getRanking } from '../services/services';
-import styles from '../Css/Ranking.module.css';
-
+import { getRanking, sortRanking } from '../services/services';
+/* import styles from '../Css/Ranking.module.css';
+ */
 export default class Ranking extends Component {
   render() {
-    const NUMBER = -1;
     const { history } = this.props;
     const data = getRanking();
-
-    const rankingData = data.sort((a, b) => {
-      if (a.score > b.score) return NUMBER;
-      if (a.score < b.score) return 1;
-      return 0;
-    });
+    const rankingData = sortRanking(data);
 
     return (
 
