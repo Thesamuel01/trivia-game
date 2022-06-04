@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class Timer extends Component {
   render() {
     const { countDown } = this.props;
     return (
-      <div>
-        { `Timer: ${countDown}` }
+      <div className="timerGame">
+        { ` ${countDown}` }
       </div>
     );
   }

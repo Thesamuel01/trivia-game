@@ -99,6 +99,7 @@ html {
     align-items: center;
     display: flex;
     font-family: 'Play', sans-serif;
+    font-weight: 700;
 }
 
   .loginLabel {
@@ -115,6 +116,7 @@ html {
     margin-left: 15px;
     padding-left: 5px;
     width: 170px;
+    font-family: 'Play', sans-serif;
 }
 
   .loginButtonPlay {
@@ -138,18 +140,46 @@ html {
     background: linear-gradient(to left,#696969, #a9a9a9, #696969) ;
     color: whitesmoke;
 }
-  header{
+
+ /* ///////////////////////////////////  PAGINA GAME / //////////////////////////////////////////// */
+
+  header {
     align-items: center;
-    border: green 2px dotted;
     color: whitesmoke;
     display: flex;
-    font-family: 'Play', sans-serif;
-    font-weight: 700;
     justify-content: space-around;
+    background: linear-gradient(180deg, rgb(37, 22, 67), rgba(7, 4, 33, 0.0));
+    margin: 0;
 } 
   header img {
     border-radius: 100%;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: -150px;
 }
+ header h2 {
+  font-family: 'Montserrat', sans-serif;
+   font-size: xx-large;
+   font-weight: 600;
+   color: whitesmoke;
+   margin-left: 80px;
+ }
+  header p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: xx-large;
+    font-weight: 500;
+  }
+   /* /////////////////////////// Classe definida no component Timer //////////////////////////////////// */
+  .timerGame {
+    color: whitesmoke;
+    font-size: x-large;
+    font-weight: 600;
+    display: flex;
+    margin-top: 20px;
+    margin-left: 30px;
+    font-family: 'Play', sans-serif;
+  }
+  
   .containerGaming {
     border: red 2px dotted;
     display: flex;
