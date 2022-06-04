@@ -1,142 +1,164 @@
 html {
     box-sizing: border-box;
     font-size: 16px;
-  }
+}
   
   *, *:before, *:after {
-    box-sizing: inherit;
-  }
+    box-sizing: border-box;
+}
   
   body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    font-weight: normal;
     margin: 0;
     padding: 0;
-    font-weight: normal;
-  }
+}
   
   ol, ul {
     list-style: none;
-  }
+}
   
   img {
-    max-width: 100%;
     height: auto;
-  }
+    max-width: 100%;
+}
 
     body {
-      margin: 0px;
-      padding: 0;
       background-image: url("../image/fundoLogin.jpg");
+      background-position: center center;
       background-repeat: no-repeat;
       background-size:cover;
-      background-position: center center;
       height: 100vh;
+      margin: 0px;
+      padding: 0;
       width:100vw;
   }
   
   .loginContainerPai {
-    width: 100vw;
     height: 100vh;
-  }
+    width: 100vw;
+}
 
   .loginContainerPai .loginLogoTrivia {
+    animation: img 1s 1 linear;
+    left:50%;
     position: relative;
+    top:38%;
+    transform: translate(-50%, -50%);
     width: 1100px;
     z-index: 1;
-    top:38%;
-    left:50%;
-    transform: translate(-50%, -50%); 
-    animation: img 1s 1 linear;
-  }
+}
 
   @keyframes img {
+    
     from {
       top: 0%;
-    }
+  }
     to {
       bottom: 0%;
-    }
   }
+}
 
   .loginSection {
-    display: flex;
-    width: 100vw;
-    height: 60px;
+    align-items: center;
     background-color: #161217;
     color: whitesmoke;
-    align-items: center;
-  }
+    display: flex;
+    height: 60px;
+    width: 100vw;
+}
 
   .loginContainer {
     display: flex;
-    width: 80%;
     justify-content: space-around;
-  }
+    width: 80%;
+}
 
   .loginText {
+    align-items: center;
+    display: flex;
     font-family: 'Play', sans-serif;
     font-size: xx-large;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-  }
+}
 
   .loginButtonConfigure{
     background-color:#161217;
+    border: none;
     color: whitesmoke;
     height: 50px;
-    padding-top: 10px;
-    border: none;
     margin-left: 180px;
-  }
+    padding-top: 10px;
+}
 
   .loginText h2 {
-    box-shadow: 19px 5px 50px -14px rgba(75,0,130,1);
     box-shadow: -19px 5px 50px -10px rgba(1,170,181,0.4);
-  }
+    box-shadow: 19px 5px 50px -14px rgba(75,0,130,1);
+}
 
   .loginForm {
-    display: flex;
     align-items: center;
+    display: flex;
     font-family: 'Play', sans-serif;
-  }
+}
 
   .loginLabel {
-    margin: 0 50px;
-    font-size: x-large;
-    display: flex;
     align-items: center;
-  }
+    display: flex;
+    font-size: x-large;
+    margin: 0 50px;
+}
 
   .loginInput {
-    margin-left: 15px;
     border-radius: 4px;
-    padding-left: 5px;
     border: none;
-    width: 170px;
     height: 18px;
-  }
+    margin-left: 15px;
+    padding-left: 5px;
+    width: 170px;
+}
 
   .loginButtonPlay {
-    border: none;
+    background: linear-gradient(to bottom left,#9321a7, #67017a, #9321a7);
     border-radius: 3px;
-    width: 100px;
-    height: 25px;
+    border: none;
+    color: whitesmoke;
     font-size: larger;
     font-weight: 400;
-    background: linear-gradient(to bottom left,#9321a7, #67017a, #9321a7);
-    color: whitesmoke;
-  }
+    height: 25px;
+    width: 100px;
+}
   .loginButtonPlay:hover {
-    width: 110px;
+    cursor: pointer;
     height: 30px;
     transition: 0.2s;
-    cursor: pointer;
-  }
+    width: 110px;
+}
 
   .loginButtonPlay:disabled {
     background: linear-gradient(to left,#696969, #a9a9a9, #696969) ;
-    color: whitesmoke;  
-  }
-  
+    color: whitesmoke;
+}
+  header{
+    align-items: center;
+    border: green 2px dotted;
+    color: whitesmoke;
+    display: flex;
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    justify-content: space-around;
+} 
+  header img {
+    border-radius: 100%;
+}
+  .containerGaming {
+    border: red 2px dotted;
+    display: flex;
+    margin: 0 auto;
+    min-height: 300px;
+    padding: 15px;
+    width: 600px;
+    align-items: center;
+    justify-content: center;
+}
 
 

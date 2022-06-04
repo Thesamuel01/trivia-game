@@ -22,7 +22,7 @@ class Game extends Component {
       endRequisition: false,
       indexQuestion: 0,
       answered: false,
-      timer: 30,
+      timer: 10000000,
       pointsBydifficulty: {
         hard: 3,
         medium: 2,
@@ -123,7 +123,7 @@ class Game extends Component {
 
     const userRanking = ranking[ranking.length - 1];
 
-    this.setState({ timer: 30 });
+    this.setState({ timer: 1000000000 });
 
     if (indexQuestion === questions.length) {
       updateRankig(score, assertions, userRanking);
@@ -143,12 +143,13 @@ class Game extends Component {
     const { history } = this.props;
 
     return (
-      <div>
+      <div className="boxGaming">
         <Header
           history={ history }
+          className="headerGaming"
         />
         <Timer countDown={ timer } />
-        <section>
+        <section className="containerGaming">
           {
             endRequisition
             && (

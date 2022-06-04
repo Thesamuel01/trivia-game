@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';

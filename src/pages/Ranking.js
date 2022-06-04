@@ -13,10 +13,10 @@ export default class Ranking extends Component {
 
       <main>
         <h1 data-testid="ranking-title">Ranking</h1>
-        <section className={ styles.container }>
+        <section>
           {rankingData.map((ranking, index) => (
-            <div className={ styles.ranking } key={ ranking.id }>
-              <img className={ styles.imgRanking } src={ ranking.picture } alt="" />
+            <div key={ ranking.id }>
+              <img ng src={ ranking.picture } alt="" />
               <span data-testid={ `player-name-${index}` }>{ranking.name}</span>
               <span data-testId={ `player-score-${index}` }>{ranking.score}</span>
             </div>))}
