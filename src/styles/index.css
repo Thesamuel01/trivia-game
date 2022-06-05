@@ -207,4 +207,21 @@ html {
    cursor: pointer;
 }
 
+.questionCategory {
+  font-size: x-large;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  color: whitesmoke;
+}
+
+.questionText {
+ font-size: larger;
+ font-family: 'Montserrat', sans-serif;
+ font-weight: 300;
+ color: whitesmoke;
+ margin-top: 10px;
+ margin-bottom: 10px;
+}
+
+
 

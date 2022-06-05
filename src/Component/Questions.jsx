@@ -23,8 +23,14 @@ class Questions extends Component {
 
     return (
       <div className="buttonGame">
-        <div data-testid="question-category">{ category }</div>
-        <div data-testid="question-text">
+        <div
+          className="questionCategory"
+          data-testid="question-category"
+        >
+          { category }
+
+        </div>
+        <div className="questionText" data-testid="question-text">
           {
             this.formatString(question)
           }
