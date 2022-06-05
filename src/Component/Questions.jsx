@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { GrFormNextLink } from 'react-icons/gr';
 /*
 COMPONENTE RESPONSAVEL PELAS QUESTOES!!!
 */
@@ -66,11 +67,12 @@ class Questions extends Component {
             && (
               <div>
                 <button
+                  className="questionNextButton"
                   data-testid="btn-next"
                   type="button"
                   onClick={ goToNextQuestion }
                 >
-                  Next
+                  <GrFormNextLink />
                 </button>
               </div>
             )

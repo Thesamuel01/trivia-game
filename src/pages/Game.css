@@ -1,7 +1,25 @@
 .buttonGameCorrect {
-  border: 3px solid rgb(6, 240, 15);
+  background: linear-gradient(to left,#2c8720, #3ea02d, #2c8720);
+  color: whitesmoke;
+  height: 40px;
+  width: auto;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: large;
+  margin-right: 7px;
+  border: nome;
+  border-radius: 7px;
 }
 
 .buttonGameError {
-  border: 3px solid red;
+  background: linear-gradient(180deg, #e32636, #8f1414);
+  color: whitesmoke;
+  height: 40px;
+  width: auto;
+  margin-right: 7px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: large;
+  border: nome;
+  border-radius: 10px;
 }

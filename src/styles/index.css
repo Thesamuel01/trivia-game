@@ -162,12 +162,15 @@ html {
    font-size: xx-large;
    font-weight: 600;
    color: whitesmoke;
-   margin-left: 80px;
- }
+   align-items: center;
+   justify-items: center;
+    margin-left: center;
+  }
   header p {
     font-family: 'Montserrat', sans-serif;
     font-size: xx-large;
     font-weight: 500;
+    margin-right: -110px;
   }
    /* /////////////////////////// Classe definida no component Timer //////////////////////////////////// */
   .timerGame {
@@ -176,7 +179,7 @@ html {
     font-weight: 600;
     display: flex;
     margin-top: 20px;
-    margin-left: 30px;
+    margin-left: 50px;
     font-family: 'Play', sans-serif;
   }
   
@@ -186,9 +189,22 @@ html {
     margin: 0 auto;
     min-height: 300px;
     padding: 15px;
-    width: 600px;
+    width: 1000px;
     align-items: center;
     justify-content: center;
+}
+
+ /* //////// oreciso descobrir como deixar o icone branco. ////////////////////// */
+.questionNextButton {
+   border: none;
+   width:  50px;
+   height: 50px;
+   border: none;
+   background-color: transparent;
+   justify-items: center;
+   align-items: center;
+   font-size: xxx-large;
+   cursor: pointer;
 }
 
 
