@@ -141,7 +141,7 @@ html {
     color: whitesmoke;
 }
 
- /* ///////////////////////////////////  PAGINA GAME / //////////////////////////////////////////// */
+ /* ///////////////////////////////////   PAGINA GAME   //////////////////////////////////////////// */
 
   header {
     align-items: center;
@@ -172,8 +172,11 @@ html {
     font-weight: 500;
     margin-right: -110px;
   }
+
+
    /* /////////////////////////// Classe definida no component Timer //////////////////////////////////// */
-  .timerGame {
+  
+   .timerGame {
     color: whitesmoke;
     font-size: x-large;
     font-weight: 600;
@@ -184,23 +187,26 @@ html {
   }
   
   .containerGaming {
-    border: red 2px dotted;
     display: flex;
     margin: 0 auto;
     min-height: 300px;
+    border-radius: 25px;
     padding: 15px;
     width: 1000px;
+    background: linear-gradient(rgba(136, 149, 167, 0.6), rgba(180, 188, 199, 0.6), rgba(136, 149, 167, 0.6));
     align-items: center;
     justify-content: center;
 }
 
- /* //////// oreciso descobrir como deixar o icone branco. ////////////////////// */
+ /* //////// preciso descobrir como deixar o ícones branco. ////////////////////// */
 .questionNextButton {
    border: none;
    width:  50px;
    height: 50px;
    border: none;
    background-color: transparent;
+   position: relative; 
+   bottom: -45px;
    justify-items: center;
    align-items: center;
    font-size: xxx-large;
@@ -208,20 +214,34 @@ html {
 }
 
 .questionCategory {
-  font-size: x-large;
+  /* margin-top: 60px; */
+  font-size: xx-large;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   color: whitesmoke;
 }
 
 .questionText {
- font-size: larger;
+ font-size: x-large;
  font-family: 'Montserrat', sans-serif;
- font-weight: 300;
+ font-weight: 500;
  color: whitesmoke;
  margin-top: 10px;
  margin-bottom: 10px;
 }
 
-
+.questionButton {
+  background: linear-gradient(to left,#878787, #d5d5d5, #878787);
+  color: #161217;
+  height: 40px;
+  min-width: 40px;
+  position: relative;
+  bottom: -30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: large;
+  margin-right: 7px;
+  border: nome;
+  border-radius: 7px;
+}
 

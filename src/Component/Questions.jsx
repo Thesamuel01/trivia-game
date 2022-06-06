@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { GrFormNextLink } from 'react-icons/gr';
+import { BsArrowRight } from 'react-icons/bs';
 /*
 COMPONENTE RESPONSAVEL PELAS QUESTOES!!!
 */
@@ -43,7 +43,8 @@ class Questions extends Component {
               ? (
                 <button
                   key={ index }
-                  className={ answered ? 'buttonGameCorrect' : '' }
+                  id="button1"
+                  className={ answered ? 'buttonGameCorrect' : 'questionButton' }
                   type="button"
                   data-testid="correct-answer"
                   disabled={ answered }
@@ -55,7 +56,7 @@ class Questions extends Component {
               : (
                 <button
                   key={ index }
-                  className={ answered ? 'buttonGameError' : '' }
+                  className={ answered ? 'buttonGameError' : 'questionButton' }
                   type="button"
                   data-testid={ `wrong-answer-${wrongAnswerIndex}` }
                   disabled={ answered }
@@ -78,7 +79,7 @@ class Questions extends Component {
                   type="button"
                   onClick={ goToNextQuestion }
                 >
-                  <GrFormNextLink />
+                  <BsArrowRight style={ { color: 'whitesmoke' } } />
                 </button>
               </div>
             )
