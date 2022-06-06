@@ -22,7 +22,7 @@ class Game extends Component {
       endRequisition: false,
       indexQuestion: 0,
       answered: false,
-      timer: 10000000,
+      timer: 30,
       pointsBydifficulty: {
         hard: 3,
         medium: 2,
@@ -123,7 +123,7 @@ class Game extends Component {
 
     const userRanking = ranking[ranking.length - 1];
 
-    this.setState({ timer: 1000000000 });
+    this.setState({ timer: 30 });
 
     if (indexQuestion === questions.length) {
       updateRankig(score, assertions, userRanking);
