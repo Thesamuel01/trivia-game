@@ -244,6 +244,7 @@ html {
   margin-right: 7px;
   border: nome;
   border-radius: 7px;
+  cursor: pointer;
 }
 
  /* ////////////////////////////    PAGINA FEEDBACK ////////////////////////////////////// */
@@ -350,3 +351,24 @@ html {
   top: 15%;
   left: 32%;
 }
+
+/* //////////////////////////// NOTFOUND ////////////////// */
+
+.notFoundContainer {
+  height: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  cursor: pointer;
+  animation: tremer 0.8s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes tremer {
+  0%{transform: translate(1px, 1px) rotate(0deg);}
+  50%{transform: translate(-2px, -2px) rotate(-1deg);}
+  100%{transform: translate(3px, -1px) rotate(0deg);}
+}
+
+/* ///////////////////////////////// ranking ///////////////////////////////// */
+

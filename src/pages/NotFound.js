@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import imageNotFound from '../image/404.png';
 
 class NotFound extends Component {
   render() {
     return (
-      <div>
-        <span>Sorry!</span>
-        <span>Page not Found</span>
+      <div className="">
+        <img alt="logo" className="notFoundContainer" src={ imageNotFound } />
       </div>
     );
   }
