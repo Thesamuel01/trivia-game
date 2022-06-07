@@ -5,7 +5,11 @@ class NotFound extends Component {
   render() {
     return (
       <div className="">
-        <img alt="logo" className="notFoundContainer" src={ imageNotFound } />
+        <img
+          alt="logo"
+          className="notFoundContainer"
+          src={ imageNotFound }
+        />
       </div>
     );
   }

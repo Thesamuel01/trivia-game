@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { getRanking, sortRanking } from '../services/services';
 /* import styles from '../Css/Ranking.module.css';
  */
@@ -11,9 +11,9 @@ export default class Ranking extends Component {
 
     return (
 
-      <main>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <section>
+      <main className="rankDiv">
+        <h1 data-testid="ranking-title" className="rankH1">Ranking</h1>
+        <section className="rankSection">
           {rankingData.map((ranking, index) => (
             <div key={ ranking.id }>
               <img ng src={ ranking.picture } alt="" />
@@ -26,6 +26,7 @@ export default class Ranking extends Component {
           name="homeBtn"
           onClick={ () => history.push('/') }
           data-testid="btn-go-home"
+          className="rankButton"
         >
           Home
         </button>

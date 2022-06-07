@@ -128,12 +128,16 @@ html {
     font-weight: 400;
     height: 25px;
     width: 100px;
+    cursor: pointer;
 }
-  .loginButtonPlay:hover {
+  .loginButtonPlay:hover  {
     cursor: pointer;
     height: 30px;
-    transition: 0.2s;
+    transition: 0.1s;
     width: 110px;
+    color: #f3f3f3;
+    box-shadow: 0px opx 35px #7b3288, 0px 0px 15px #7b3288 inset;
+    text-shadow: 0px 0px 10px #e1e0e1, 0px 3px;
 }
 
   .loginButtonPlay:disabled {
@@ -372,3 +376,51 @@ html {
 
 /* ///////////////////////////////// ranking ///////////////////////////////// */
 
+.rankDiv {
+  display: flex;
+}
+
+.rankContainer {
+  margin-left: auto;
+  margin-right: auto;
+  align-items:center;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  top: 160%;
+  left: 32%;
+  height: 700px;
+}
+
+.rankDiv h1 {
+  font-family: 'Play', sans-serif;
+  color: whitesmoke;
+  font-size: xxx-large;
+  font-weight: 700 rem;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  border:  solid red ;
+}
+
+.rankSection {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  font-family: 'Montserrat',sans-serif;
+  color: whitesmoke;
+  font-weight: 500;
+  height: 500px;
+  width: 500px;
+  align-items: center;
+  background-color: rgba(84, 83, 83, 0.5);
+  border:  solid blue ;
+}
+
+.ranButton {
+  height: 25px;
+  font-family: 'Montserrat', sans-serif;
+  color: red;
+}
