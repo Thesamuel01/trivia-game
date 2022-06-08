@@ -11,14 +11,26 @@ export default class Ranking extends Component {
 
     return (
 
-      <main className="rankDiv">
+      <main>
         <h1 data-testid="ranking-title" className="rankH1">Ranking</h1>
         <section className="rankSection">
           {rankingData.map((ranking, index) => (
-            <div key={ ranking.id }>
-              <img ng src={ ranking.picture } alt="" />
-              <span data-testid={ `player-name-${index}` }>{ranking.name}</span>
-              <span data-testId={ `player-score-${index}` }>{ranking.score}</span>
+            <div className="rankDiv" key={ ranking.id }>
+              <img ng src={ ranking.picture } alt="Avatar" className="rankImage" />
+              <span
+                className="rankName"
+                data-testid={ `player-name-${index}` }
+              >
+                {ranking.name}
+
+              </span>
+              <span
+                className="rankScore"
+                data-testId={ `player-score-${index}` }
+              >
+                {ranking.score}
+
+              </span>
             </div>))}
         </section>
         <button

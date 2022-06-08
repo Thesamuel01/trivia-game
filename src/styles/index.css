@@ -137,7 +137,6 @@ html {
     width: 110px;
     color: #f3f3f3;
     box-shadow: 0px opx 35px #7b3288, 0px 0px 15px #7b3288 inset;
-    text-shadow: 0px 0px 10px #e1e0e1, 0px 3px;
 }
 
   .loginButtonPlay:disabled {
@@ -376,51 +375,85 @@ html {
 
 /* ///////////////////////////////// ranking ///////////////////////////////// */
 
-.rankDiv {
-  display: flex;
-}
 
-.rankContainer {
-  margin-left: auto;
-  margin-right: auto;
-  align-items:center;
-  display:flex;
-  justify-content: center;
-  flex-direction: column;
-  position: absolute;
-  top: 160%;
-  left: 32%;
-  height: 700px;
-}
 
-.rankDiv h1 {
-  font-family: 'Play', sans-serif;
-  color: whitesmoke;
+.rankH1 {
   font-size: xxx-large;
-  font-weight: 700 rem;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  border:  solid red ;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: whitesmoke;
+  position: absolute;
+  left: 43%;
+  right: 80%;
+  transform: translate(10%, 30%);
 }
 
 .rankSection {
   display: flex;
+  flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  flex-direction: column;
-  font-family: 'Montserrat',sans-serif;
+  font-size: x-large;
+  font-family: 'Montserrat', sans-serif;
   color: whitesmoke;
-  font-weight: 500;
-  height: 500px;
   width: 500px;
-  align-items: center;
-  background-color: rgba(84, 83, 83, 0.5);
-  border:  solid blue ;
+  height: 550px;
+  border-radius: 10px;
+  background-color: rgba(146, 145, 145, 0.5);
+  box-shadow: 0px 19px 33px -7px rgba(0,0,0,1);
+  overflow-y: scroll;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, 18%);
 }
 
-.ranButton {
-  height: 25px;
-  font-family: 'Montserrat', sans-serif;
-  color: red;
+.rankSection::-webkit-scrollbar {
+  width: 10px;
+  border: transparent;;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+.rankSection::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(128, 0, 128, 0.5), rgba(138, 43, 226, 0.5) );
+  border-radius: 6px;
+}
+
+.rankDiv {
+  display: flex;
+  align-items: center;
+justify-content: space-between;
+}
+
+.rankDiv span {
+  margin-right: 20px;
+}
+
+.rankImage {
+  width: 100px;
+  margin-bottom: 8px;
+  border-radius: 9px;
+  justify-content: flex-start;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.rankButton {
+  width: 450px;
+  height: 40px;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  border-radius: 7px;
+  border: none;
+  background: linear-gradient(to bottom left,#9321a7, #67017a, #9321a7);
+  color: whitesmoke;
+  position: absolute;
+  left:34.47%;
+  top:93%;
+  cursor: pointer;
+  box-shadow: 0px 14px 33px -7px rgba(216, 65, 216, 0.4);
+}
+  
