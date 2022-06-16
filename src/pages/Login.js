@@ -96,7 +96,7 @@ class Login extends Component {
               </label>
               <label htmlFor="email" className="loginLabel">
 
-                <spam className="loginInputName">E-mail</spam>
+                <span className="loginInputName">E-mail</span>
                 <input
                   className="loginInput"
                   name="userEmail"

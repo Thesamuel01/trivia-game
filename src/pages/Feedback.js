@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from '../Component/Header';
+import Header from '../components/Header';
 import { getRanking, updateRefreshState } from '../services/services';
 // import style from '../css/Feedback.module.css';
 

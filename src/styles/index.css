@@ -88,6 +88,7 @@ html {
     height: 50px;
     margin-left: 180px;
     padding-top: 10px;
+    cursor: pointer;
 }
 
   .loginText h2 {
