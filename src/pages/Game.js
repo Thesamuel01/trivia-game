@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from '../Component/Header';
-import Questions from '../Component/Questions';
-import Timer from '../Component/Timer';
+import Header from '../components/Header';
+import Questions from '../components/Questions';
+import Timer from '../components/Timer';
 import { updatePoints } from '../redux/actions/actions';
 import {
   clearLocalStorage, getRanking, getToken,
